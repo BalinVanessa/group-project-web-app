@@ -1,10 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      Woot woot
+      Greetings
+      Hi guys -Vanessa
+      sup. -nandini
     </div>
 
   );
