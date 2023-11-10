@@ -1,13 +1,93 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Limelight&family=Sulphur+Point:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@500&family=Limelight&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kulim+Park:wght@300&family=Limelight&display=swap');
+
+.mxr-dark-blue-bg {
+  background-color: #101615;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.mxr-med-blue-bg {
+  background-color: #0E1A20;
+}
+
+.mxr-light-blue-bg {
+  background-color: #14232C;
+}
+
+.mxr-dark-gold {
+  color: #D6B481;
+}
+
+.mxr-med-gold {
+  color: #E2D36C;
+}
+
+.mxr-light-gold {
+  color: #F0EBC5;
+}
+
+h1 {
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 96px;
+}
+
+h2 {
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 64px;
+}
+
+h3 {
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+}
+
+h4 {
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+}
+
+h5 {
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+p {
+  font-family: 'Darker Grotesque', sans-serif;
+  font-family: 'Limelight', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.sulphur-light {
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 300;
+}
+
+.sulphur-regular {
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+}
+
+.grotesque-medium {
+  font-family: 'Darker Grotesque', sans-serif;
+  font-family: 'Limelight', sans-serif;
+  font-weight: 500;
+}
+
+.kulim-light {
+  font-family: 'Kulim Park', sans-serif;
+  font-family: 'Limelight', sans-serif;
+  font-weight: 300;
 }
