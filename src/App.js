@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       Greetings
       Hi guys -Vanessa
-      sup. -nandini
+      hello - jack
     </div>
 
   );
