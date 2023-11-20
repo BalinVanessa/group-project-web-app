@@ -1,12 +1,16 @@
-import './App.css';
+import './index.css'
+import {HashRouter} from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import Mixr from './Mixr';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Mixr/>}/>
-    </Routes>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/Mixr"/>} />
+        <Route path="/Mixr/*" element={<Mixr/>}/>
+      </Routes>
+    </HashRouter>
 
   );
 }
