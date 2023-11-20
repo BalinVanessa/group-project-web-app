@@ -1,4 +1,17 @@
-// home page
-// make new folders for your new components with their own index.js files in them :)
-// good luck team!
-// - vanessa
+import Navigation from "./Navigation";
+
+function Mixr() {
+    // Put Your Screens in Routes, will go under nav bar
+    return (
+        <div>
+            <Navigation />
+
+            <Routes>
+
+            </Routes>
+        </div>
+    )
+
+}
+
+export default Mixr;
