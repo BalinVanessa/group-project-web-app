@@ -1,12 +1,12 @@
 import './App.css';
+import { Routes, Route, Navigate } from "react-router";
+import Mixr from './Mixr';
 
 function App() {
   return (
-    <div className="App">
-      Greetings
-      Hi guys -Vanessa
-      hello - jack
-    </div>
+    <Routes>
+      <Route path="/" element={<Mixr/>}/>
+    </Routes>
 
   );
 }
