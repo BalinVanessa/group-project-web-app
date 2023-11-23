@@ -11,7 +11,6 @@ function App() {
         <Route path="/Mixr/*" element={<Mixr/>}/>
       </Routes>
     </HashRouter>
-
   );
 }
 
