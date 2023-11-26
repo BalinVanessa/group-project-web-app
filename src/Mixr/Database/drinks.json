@@ -1,0 +1,9 @@
+[
+    {
+        "id" : 1 ,
+        "name": "The Cape Cod (Vodka Cran)",
+        "creator": 2,
+        "description": "The Cape Cod or Cape Codder is a type of cocktail consisting of vodka and cranberry juice. Some recipes also call for squeezing a lime wedge over the glass and dropping it into the drink. ",
+        "numStars": 4
+    }
+]
