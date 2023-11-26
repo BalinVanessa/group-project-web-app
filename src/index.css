@@ -62,8 +62,8 @@ h5 {
 }
 
 p {
-  font-family: 'Darker Grotesque', sans-serif;
   font-family: 'Limelight', sans-serif;
+  font-family: 'Darker Grotesque', sans-serif;
   font-weight: 500;
   font-size: 20px;
 }
@@ -94,4 +94,38 @@ p {
 
 .icon-size-lg {
   font-size: 24px;
+}
+
+.mxr-container {
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/* CARDS */
+
+.drinkCard {
+  width: 384px;
+  height: 560px;
+  border-radius: 24px;
+}
+
+.drinkCard-img {
+  width: 100%;
+  height: 320px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+}
+
+.drinkCard-text {
+  margin-top: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-bottom: 24px;
+  color: #F0EBC5;
+}
+
+.drinkCard-text>p {
+  padding-top: 16px;
 }

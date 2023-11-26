@@ -1,0 +1,25 @@
+[
+    {
+        "profileType": "Drinker",
+        "name" : "Vanessa Balin",
+        "userID" : 1,
+        "favoriteDrinks" : [1, 2, 3],
+        "following" : [2, 3]
+    },
+
+    {
+        "profileType": "Mixologist",
+        "name" : "Jack Rifkin",
+        "userID" : 2,
+        "favoriteDrinks" : [1, 2, 3],
+        "following" : [1, 3]
+    },
+
+    {
+        "profileType": "Drinker",
+        "name" : "Nandini Ghosh",
+        "userID" : 3,
+        "favoriteDrinks" : [1, 2, 3],
+        "following" : [1]
+    }
+]
