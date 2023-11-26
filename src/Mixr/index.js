@@ -8,7 +8,7 @@ function Mixr() {
         <div>
             <Navigation />
             <Routes>
-                <Route path="Profile/" element={<Profile/>}/>
+                <Route path="Profile/:userID" element={<Profile/>}/>
             </Routes>
         </div>
     )
