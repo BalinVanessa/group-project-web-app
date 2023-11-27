@@ -22,9 +22,9 @@ function Profile() {
 
             <hr />
 
-            (if (currentUser.profileType == "Drinker") {
+            (if (currentUser.profileType === "Drinker") {
                 <DrinkerProfile currentUser={currentUser}/>
-            } else if (currentUser.profileType == "Mixologist") {
+            } else if (currentUser.profileType === "Mixologist") {
                 <MixologistProfile/>
             })
 
