@@ -33,7 +33,7 @@ function DrinkerProfile({ currentUser }) {
             <div className="d-inline-flex cardRow mt-5 w-100">
                 {favDrinks.map((drink) => (
                     <div className="drinkCard mxr-med-blue-bg">
-                        <img className="drinkCard-img" src="./Images/VodkaCran.jpg" />
+                        <img className="drinkCard-img" src={drink.image} />
                         <div className="drinkCard-text">
                             <h4>{drink.name}</h4>
                             <div className="d-inline">
