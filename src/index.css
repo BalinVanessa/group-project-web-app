@@ -96,11 +96,61 @@ p {
   font-size: 24px;
 }
 
+.icon-size-xlg {
+  font-size: 80px;
+}
+
 .mxr-container {
   padding-left: 32px;
   padding-right: 32px;
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+/* BUTTONS */
+.golden-button-small {
+  height: 45px;
+  width: 100px;
+  background-color: #E2D36C;
+  color: #14232C;
+  border-radius: 15px;
+  border-width: 0px;
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.golden-button-large-outline {
+  height: 45px;
+  width: 300px;
+  background-color: #14232C;
+  color: #E2D36C;
+  border-radius: 15px;
+  border-color: #E2D36C;
+  border-width: 2px;
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+
+/* SPACERS */
+.spacer-m {
+  height: 40px;
+}
+
+.spacer-l {
+  height: 80px;
+}
+
+.spacer-xl {
+  height: 100px;
+}
+
+.spacer-xxl {
+  height: 160px;
 }
 
 /* CARDS */
