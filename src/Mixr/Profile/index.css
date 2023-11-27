@@ -10,3 +10,7 @@
     padding-top: 64px;
     background-color: white;
 }
+
+.cardRow {
+    overflow-x: auto;
+}

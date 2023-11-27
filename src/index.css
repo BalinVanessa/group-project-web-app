@@ -176,10 +176,17 @@ p {
 
 /* CARDS */
 
+/* the div that uses .cardRow should also use .d-inline-flex */
+.cardRow {
+  overflow-x: auto;
+}
+
 .drinkCard {
   width: 384px;
   height: 560px;
   border-radius: 24px;
+  margin-right: 32px;
+  flex-shrink: 0;
 }
 
 .drinkCard-img {
@@ -187,6 +194,7 @@ p {
   height: 320px;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
+  object-fit: cover;
 }
 
 .drinkCard-text {
