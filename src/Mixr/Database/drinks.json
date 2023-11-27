@@ -2,6 +2,7 @@
     {
         "id": 1,
         "name": "The Cape Cod (Vodka Cran)",
+        "image": "./Images/VodkaCran.jpg",
         "creator": 2,
         "description": "The Cape Cod or Cape Codder is a type of cocktail consisting of vodka and cranberry juice. Some recipes also call for squeezing a lime wedge over the glass and dropping it into the drink. ",
         "numStars": 4
@@ -9,6 +10,7 @@
     {
         "id": 2,
         "name": "Espresso Martini",
+        "image": "./Images/VodkaCran.jpg",
         "creator": 2,
         "description": "The espresso martini, also known as a vodka espresso, is a cold caffeinated alcoholic drink made with espresso, coffee liqueur, and vodka. It is not a true martini as it contains neither gin nor vermouth, but is one of many drinks that incorporate the term martini into their names.",
         "numStars": 3
@@ -16,6 +18,7 @@
     {
         "id": 3,
         "name": "Mojito",
+        "image": "./Images/VodkaCran.jpg",
         "creator": 2,
         "description": "Mojito is a traditional Cuban punch. The cocktail often consists of five ingredients: white rum, sugar, lime juice, soda water, and mint. Its combination of sweetness, citrus, and herbaceous mint flavors is intended to complement the rum, and has made the mojito a popular summer drink",
         "numStars": 5
@@ -23,6 +26,7 @@
     {
         "id": 4,
         "name": "Negroni",
+        "image": "./Images/VodkaCran.jpg",
         "creator": 2,
         "description": "The negroni is a cocktail, made of equal parts gin, vermouth rosso, and Campari, generally served on the rocks, and commonly garnished with an orange slice or orange peel. It is considered an apéritif.",
         "numStars": 2

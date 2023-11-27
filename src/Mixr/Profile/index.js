@@ -22,11 +22,7 @@ function Profile() {
 
             <hr />
 
-            (if (currentUser.profileType === "Drinker") {
-                <DrinkerProfile currentUser={currentUser}/>
-            } else if (currentUser.profileType === "Mixologist") {
-                <MixologistProfile/>
-            })
+            {currentUser.profileType === "Drinker" ? <DrinkerProfile currentUser={currentUser} /> : <MixologistProfile currentUser={currentUser} />}
 
         </div>
     )
