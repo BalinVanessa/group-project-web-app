@@ -176,6 +176,11 @@ p {
 
 /* CARDS */
 
+/* Use this to make the row extend to the right edge of the screen */
+.flush-right {
+  margin-right: -32px;
+}
+
 /* the div that uses .cardRow should also use .d-inline-flex */
 .cardRow {
   overflow-x: auto;
