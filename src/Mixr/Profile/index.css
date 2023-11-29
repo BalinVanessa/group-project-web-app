@@ -11,6 +11,6 @@
     background-color: white;
 }
 
-.cardRow {
-    overflow-x: auto;
+.flush-right {
+    margin-right: -32px;
 }

@@ -28,7 +28,7 @@ function DrinkerProfile({ currentUser }) {
     // Still need to implement following (might make this own component)
     // Still need to implement reviews (might make this own component)
     return (
-        <div>
+        <div className="flush-right">
             <h3 className="mxr-med-gold">Your Favorite Recipes</h3>
             <div className="d-inline-flex cardRow mt-5 w-100">
                 {favDrinks.map((drink) => (
