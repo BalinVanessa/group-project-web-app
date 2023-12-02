@@ -29,45 +29,57 @@ function Account() {
     }, []);
     return (
         <div className="w-50">
-            <h1>Account</h1>
+            <h1 className="mxr-med-gold">Account</h1>
             {account && (
                 <div>
-                    <input value={account.password}
-                        onChange={(e) => setAccount({
-                            ...account,
-                            password: e.target.value
-                        })} />
-                    <input value={account.firstName}
-                        onChange={(e) => setAccount({
-                            ...account,
-                            firstName: e.target.value
-                        })} />
-                    <input value={account.lastName}
-                        onChange={(e) => setAccount({
-                            ...account,
-                            lastName: e.target.value
-                        })} />
-                    <input value={account.dob}
-                        onChange={(e) => setAccount({
-                            ...account,
-                            dob: e.target.value
-                        })} />
-                    <input value={account.email}
-                        onChange={(e) => setAccount({
-                            ...account,
-                            email: e.target.value
-                        })} />
-                    <select 
-                        value={account.role}
-                        onChange={(e) => setAccount({
-                        ...account,
-                        role: e.target.value
-                    })}>
-                        <option value="USER">User</option>
-                        <option value="ADMIN">Admin</option>
-                        <option value="MIXOLOGIST">Mixologist</option>
-                        <option value="DRINKER">Drinker</option>
-                    </select>
+                    <label>
+                        <h3 className="mxr-med-gold">Password</h3>
+                        <input value={account.password}
+                            onChange={(e) => setAccount({
+                                ...account,
+                                password: e.target.value
+                            })} /></label>
+                    <label>
+                        <h3 className="mxr-med-gold">First name</h3>
+                        <input value={account.firstName}
+                            onChange={(e) => setAccount({
+                                ...account,
+                                firstName: e.target.value
+                            })} /></label>
+                    <label>
+                        <h3 className="mxr-med-gold">Last name</h3>
+                        <input value={account.lastName}
+                            onChange={(e) => setAccount({
+                                ...account,
+                                lastName: e.target.value
+                            })} /></label>
+                    <label>
+                        <h3 className="mxr-med-gold">Date of birth</h3>
+                        <input value={account.dob}
+                            onChange={(e) => setAccount({
+                                ...account,
+                                dob: e.target.value
+                            })} /></label>
+                    <label>
+                        <h3 className="mxr-med-gold">Email</h3>
+                        <input value={account.email}
+                            onChange={(e) => setAccount({
+                                ...account,
+                                email: e.target.value
+                            })} /></label>
+                    <label>
+                        <h3 className="mxr-med-gold">Role</h3>
+                        <select
+                            value={account.role}
+                            onChange={(e) => setAccount({
+                                ...account,
+                                role: e.target.value
+                            })}>
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="MIXOLOGIST">Mixologist</option>
+                            <option value="DRINKER">Drinker</option>
+                        </select></label>
                     <button onClick={save}>
                         Save
                     </button>

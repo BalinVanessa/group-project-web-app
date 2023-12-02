@@ -24,6 +24,8 @@ function Mixr() {
                 <Route path="/Home" element={<Home />} />
                 <Route path="/Home/:userID" element={<Home />} />
                 <Route path="/Profile/:userID" element={<Profile />} />
+
+                {/* A6 ROUTES --------------------------------------------- */}
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signupa6" element={<Signup />} />
                 <Route path="/account" element={<Account />} />

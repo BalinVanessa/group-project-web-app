@@ -48,7 +48,7 @@ function UserTable() {
     useEffect(() => { fetchUsers(); }, []);
     return (
         <div>
-            <h1>User List</h1>
+            <h1 className="mxr-med-gold">User List</h1>
             <table className="table">
                 <thead>
                     <tr>

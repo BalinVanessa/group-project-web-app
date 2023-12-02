@@ -10,9 +10,14 @@ function Signin() {
     };
     return (
         <div>
-            <h1>Signin</h1>
-            <input value={credentials.username} onChange={(e) => setCredentials({ ...credentials, username: e.target.value })} />
-            <input value={credentials.password} onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
+            <h1 className="mxr-med-gold">Signin</h1>
+            <label>
+                <h3 className="mxr-med-gold">Username</h3>
+                <input value={credentials.username} onChange={(e) => setCredentials({ ...credentials, username: e.target.value })} />
+            </label>
+            <label>
+                <h3 className="mxr-med-gold">Password</h3>
+                <input value={credentials.password} onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} /></label>
             <button onClick={signin}> Signin </button>
         </div>
     );

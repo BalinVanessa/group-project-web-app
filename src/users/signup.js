@@ -17,20 +17,24 @@ function Signup() {
     };
     return (
         <div>
-            <h1>Signup</h1>
+            <h1 className="mxr-med-gold">Signup</h1>
             {error && <div>{error}</div>}
-            <input
-                value={credentials.username}
-                onChange={(e) => setCredentials({
-                    ...credentials,
-                    username: e.target.value
-                })} />
-            <input
-                value={credentials.password}
-                onChange={(e) => setCredentials({
-                    ...credentials,
-                    password: e.target.value
-                })} />
+            <label>
+                <h3 className="mxr-med-gold">Username</h3>
+                <input
+                    value={credentials.username}
+                    onChange={(e) => setCredentials({
+                        ...credentials,
+                        username: e.target.value
+                    })} /></label>
+            <label>
+                <h3 className="mxr-med-gold">Password</h3>
+                <input
+                    value={credentials.password}
+                    onChange={(e) => setCredentials({
+                        ...credentials,
+                        password: e.target.value
+                    })} /></label>
             <button onClick={signup}>
                 Signup
             </button>
