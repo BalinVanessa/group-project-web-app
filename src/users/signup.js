@@ -10,7 +10,7 @@ function Signup() {
     const signup = async () => {
         try {
             await client.signup(credentials);
-            navigate("/project/account");
+            navigate("/account");
         } catch (err) {
             setError(err.response.data.message);
         }
