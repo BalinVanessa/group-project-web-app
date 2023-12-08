@@ -162,6 +162,34 @@ hr.smaller {
   font-size: 20px;
 }
 
+.golden-button-med-outline {
+  height: 45px;
+  width: 200px;
+  background-color: #14232C;
+  color: #E2D36C;
+  border-radius: 15px;
+  border-color: #E2D36C;
+  border-width: 2px;
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.golden-button-small-outline {
+  height: 45px;
+  width: 100px;
+  background-color: #14232C;
+  color: #E2D36C;
+  border-radius: 15px;
+  border-color: #E2D36C;
+  border-width: 2px;
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
 
 /* SPACERS */
 .spacer-m {

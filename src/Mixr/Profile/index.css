@@ -20,3 +20,13 @@
 .circle-img {
     border-radius: 50%;
 }
+
+.mxr-container-smaller {
+    padding-left: 16%;
+    padding-right: 16%;
+}
+
+.mxr-container-smaller .row {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
