@@ -20,7 +20,11 @@ function Profile() {
                 </div>
             </div>
 
-            <hr />
+            <div className="mb-5">
+                <hr className="smaller" />
+                <hr />
+                <hr className="smaller" />
+            </div>
 
             {currentUser.profileType === "Drinker" ? <DrinkerProfile currentUser={currentUser} /> : <MixologistProfile currentUser={currentUser} />}
 

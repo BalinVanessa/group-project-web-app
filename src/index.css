@@ -120,6 +120,20 @@ p {
   padding-bottom: 0px;
 }
 
+/* Styling hr bars */
+hr {
+  height: 4px;
+  color:#E2D36C;
+  background-color: #E2D36C;
+  border: none;
+}
+
+hr.smaller {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+
 /* BUTTONS */
 .golden-button-small {
   height: 45px;
@@ -212,4 +226,18 @@ p {
 
 .drinkCard-text>p {
   padding-top: 16px;
+}
+
+/* REVIEW STYLING */
+.review {
+  background-color: #101615;
+  border-radius: 24px;
+  padding: 32px;
+  color:#F0EBC5;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.review-img {
+  width: 128px;
 }
