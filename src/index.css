@@ -120,6 +120,20 @@ p {
   padding-bottom: 0px;
 }
 
+/* Styling hr bars */
+hr {
+  height: 4px;
+  color:#E2D36C;
+  background-color: #E2D36C;
+  border: none;
+}
+
+hr.smaller {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+
 /* BUTTONS */
 .golden-button-small {
   height: 45px;
@@ -137,6 +151,34 @@ p {
 .golden-button-large-outline {
   height: 45px;
   width: 300px;
+  background-color: #14232C;
+  color: #E2D36C;
+  border-radius: 15px;
+  border-color: #E2D36C;
+  border-width: 2px;
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.golden-button-med-outline {
+  height: 45px;
+  width: 200px;
+  background-color: #14232C;
+  color: #E2D36C;
+  border-radius: 15px;
+  border-color: #E2D36C;
+  border-width: 2px;
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.golden-button-small-outline {
+  height: 45px;
+  width: 100px;
   background-color: #14232C;
   color: #E2D36C;
   border-radius: 15px;
@@ -176,10 +218,22 @@ p {
 
 /* CARDS */
 
+/* Use this to make the row extend to the right edge of the screen */
+.flush-right {
+  margin-right: -32px;
+}
+
+/* the div that uses .cardRow should also use .d-inline-flex */
+.cardRow {
+  overflow-x: auto;
+}
+
 .drinkCard {
   width: 384px;
   height: 560px;
   border-radius: 24px;
+  margin-right: 32px;
+  flex-shrink: 0;
 }
 
 .drinkCard-img {
@@ -187,6 +241,7 @@ p {
   height: 320px;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
+  object-fit: cover;
 }
 
 .drinkCard-text {
@@ -199,4 +254,18 @@ p {
 
 .drinkCard-text>p {
   padding-top: 16px;
+}
+
+/* REVIEW STYLING */
+.review {
+  background-color: #101615;
+  border-radius: 24px;
+  padding: 32px;
+  color:#F0EBC5;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.review-img {
+  width: 128px;
 }

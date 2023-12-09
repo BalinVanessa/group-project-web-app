@@ -3,8 +3,8 @@
         "profileType": "Drinker",
         "name" : "Vanessa Balin",
         "userID" : 1,
-        "favoriteDrinks" : [1, 2, 3],
-        "following" : [2, 3]
+        "favoriteDrinks" : [1, 2, 3, 4],
+        "following" : [3]
     },
 
     {
