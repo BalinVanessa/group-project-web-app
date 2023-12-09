@@ -1,5 +1,5 @@
 import { GiMartini } from "react-icons/gi";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //have to align text labels
 function Login() {
