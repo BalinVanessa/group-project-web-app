@@ -25,7 +25,7 @@ function Profile() {
             (if (currentUser.profileType === "Drinker") {
                 <DrinkerProfile currentUser={currentUser}/>
             } else if (currentUser.profileType === "Mixologist") {
-                <MixologistProfile/>
+                <MixologistProfile currentUser={currentUser}/>
             })
 
         </div>

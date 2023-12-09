@@ -4,6 +4,7 @@ import Profile from "./Profile";
 import Login from "./Login";
 import SignUp from "./Login/SignUp";
 import Home from "./Home";
+import MixologistProfile from "./Profile/MixologistProfile";
 
 function Mixr() {
     // Put Your Screens in Routes, will go under nav bar
