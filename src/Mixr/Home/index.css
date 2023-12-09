@@ -6,4 +6,9 @@
 .logo-text {
     font-size: 5em;
     margin-top: -15px;
+    margin-bottom: 0;
+}
+
+.title-div {
+    margin-bottom: 15px;
 }
