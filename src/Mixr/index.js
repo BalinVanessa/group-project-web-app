@@ -8,7 +8,6 @@ import ProfileEditor from "./Profile/ProfileEditor";
 import Search from "./Search";
 
 function Mixr() {
-    // Put Your Screens in Routes, will go under nav bar
     return (
         <div>
             <Navigation />
