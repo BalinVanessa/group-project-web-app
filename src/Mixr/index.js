@@ -9,7 +9,6 @@ import Cocktail from "./Cocktail";
 import Search from "./Search";
 
 function Mixr() {
-    // Put Your Screens in Routes, will go under nav bar
     return (
         <div>
             <Navigation />
