@@ -5,6 +5,7 @@ import Login from "./Login";
 import SignUp from "./Login/SignUp";
 import Home from "./Home";
 import ProfileEditor from "./Profile/ProfileEditor";
+import Cocktail from "./Cocktail";
 import Search from "./Search";
 
 function Mixr() {
@@ -21,6 +22,7 @@ function Mixr() {
                 <Route path="/Search/:searchContent" element={<Search />} />
                 <Route path="/Profile/:userID" element={<Profile/>}/>
                 <Route path="/EditProfile/:userID" element={<ProfileEditor/>}/>
+                <Route path="/Cocktail/:id" element={<Cocktail/>}/>
             </Routes>
         </div>
     )
