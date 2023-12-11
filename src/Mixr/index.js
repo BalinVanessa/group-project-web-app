@@ -7,6 +7,8 @@ import Home from "./Home";
 import ProfileEditor from "./Profile/ProfileEditor";
 import Cocktail from "./Cocktail";
 import Search from "./Search";
+import EditCocktail from "./Cocktail/EditCocktail";
+import Review from "./Review";
 
 function Mixr() {
     return (
@@ -23,6 +25,8 @@ function Mixr() {
                 <Route path="/Profile/:userID" element={<Profile/>}/>
                 <Route path="/EditProfile/:userID" element={<ProfileEditor/>}/>
                 <Route path="/Cocktail/:id" element={<Cocktail/>}/>
+                <Route path="/EditCocktail/:id" element={<EditCocktail/>}/>
+                <Route path="/Review" element={<Review/>}/>
             </Routes>
         </div>
     )
