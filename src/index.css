@@ -297,3 +297,8 @@ hr.smaller {
   z-index: 1;
   object-fit: cover;
 }
+
+.signup-fields {
+  width: 250px;
+  height: 30px;
+}

@@ -1,5 +1,6 @@
 import { FaStar } from "react-icons/fa6";
 import { RiPencilFill } from "react-icons/ri";
+import { FaRegHeart } from "react-icons/fa";
 import db from "../Database";
 import { Link, useLocation, useParams } from "react-router-dom";
 
@@ -30,11 +31,13 @@ function Cocktail() {
                 <div className="ps-5">
                     <div className="d-flex flex-row">
                         <h1 className="mxr-dark-gold">{currentDrink.name}</h1>
-                        if (currentUser.profileType === "Mixologist") {
-                            <Link to={`/EditCocktail/${id}`}>
-                                <button className="golden-button-small"><RiPencilFill /></button>
-                            </Link>
-                        }
+                        <Link to={"#"}>
+                        <button className="golden-button-small ms-5"><FaRegHeart/></button>
+                        </Link>
+                        
+                        <Link to={`/EditCocktail/${id}`}>
+                            <button className="golden-button-small ms-2"><RiPencilFill/></button>
+                        </Link>
                     </div>
                     <div className="mxr-light-gold">
                         {makeStars(currentDrink.numStars)}
