@@ -10,7 +10,6 @@ import Search from "./Search";
 import EditCocktail from "./Cocktail/EditCocktail";
 
 function Mixr() {
-    // Put Your Screens in Routes, will go under nav bar
     return (
         <div>
             <Navigation />
