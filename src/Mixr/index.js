@@ -7,6 +7,7 @@ import Home from "./Home";
 import ProfileEditor from "./Profile/ProfileEditor";
 import Cocktail from "./Cocktail";
 import Search from "./Search";
+import EditCocktail from "./Cocktail/EditCocktail";
 
 function Mixr() {
     // Put Your Screens in Routes, will go under nav bar
@@ -24,6 +25,7 @@ function Mixr() {
                 <Route path="/Profile/:userID" element={<Profile/>}/>
                 <Route path="/EditProfile/:userID" element={<ProfileEditor/>}/>
                 <Route path="/Cocktail/:id" element={<Cocktail/>}/>
+                <Route path="/EditCocktail/:id" element={<EditCocktail/>}/>
             </Routes>
         </div>
     )
