@@ -1,25 +1,38 @@
 [
     {
-        "profileType": "Drinker",
-        "name" : "Vanessa Balin",
-        "userID" : 1,
-        "favoriteDrinks" : [1, 2, 3, 4],
-        "following" : [3]
+        "_id": {
+            "$oid": "65774d001178958d6735f279"
+        },
+        "username": "NessaQuik",
+        "password": "password123",
+        "firstName": "Vanessa Ashley",
+        "lastName": "Balin",
+        "dob": "2003-10-14",
+        "email": "balin.v@northeastern.edu",
+        "role": "DRINKER"
     },
-
     {
-        "profileType": "Mixologist",
-        "name" : "Jack Rifkin",
-        "userID" : 2,
-        "favoriteDrinks" : [1, 2, 3],
-        "following" : [1, 3]
+        "_id": {
+            "$oid": "65774d001178958d6735f27a"
+        },
+        "username": "jifkin",
+        "password": "password123",
+        "firstName": "Jack",
+        "lastName": "Rifkin",
+        "dob": "2003-07-31",
+        "email": "rifkin.j@northeastern.edu",
+        "role": "MIXOLOGIST"
     },
-
     {
-        "profileType": "Drinker",
-        "name" : "Nandini Ghosh",
-        "userID" : 3,
-        "favoriteDrinks" : [1, 2, 3],
-        "following" : [1]
+        "_id": {
+            "$oid": "65774d001178958d6735f27b"
+        },
+        "username": "nandini",
+        "password": "password123",
+        "firstName": "Nandini",
+        "lastName": "Ghosh",
+        "dob": "2003-01-20",
+        "email": "ghosh.na@northeastern.edu",
+        "role": "DRINKER"
     }
 ]
