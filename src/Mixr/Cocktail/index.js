@@ -60,7 +60,9 @@ function Cocktail() {
 
             <div className="spacer-m"></div>
             <div className="pt-3 text-center">
-                <button className="golden-button-medium">Add a review</button>
+                <Link to={`/Review`}>
+                    <button className="golden-button-medium">Add a review</button>
+                </Link>
             </div>
 
             <h3 className="mxr-med-gold mt-5">Reviews</h3>
