@@ -15,13 +15,13 @@ function Login() {
                     <form id="username">
                         <label for="username" className="mxr-med-gold"><h5>Username</h5></label>
                         <br></br>
-                        <input className="text"></input>
+                        <input className="signup-fields" type="text"></input>
                     </form>
                     <br></br>
                     <form id="password">
                         <label for="password" className="mxr-med-gold"><h5>Password</h5></label>
                         <br></br>
-                        <input className="text"></input>
+                        <input className="signup-fields" type="text"></input>
                     </form>
 
                     <div className="spacer-m"></div>
@@ -32,7 +32,7 @@ function Login() {
 
                     <div className="spacer-xl"></div>
 
-                    <Link to="#">
+                    <Link to={`/SignUp`}>
                         <button className="golden-button-large-outline">Create an account instead</button>
                     </Link>
                     <div className="spacer-xxl"></div>
