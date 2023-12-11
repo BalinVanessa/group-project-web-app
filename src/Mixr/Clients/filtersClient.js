@@ -25,3 +25,8 @@ export const setAlcoholicFilter = async (isAlcoholic) => {
     const response = await request.put(`${FILTERS_API}/isAlcoholic`, isAlcoholic);
     return response.data;
 }
+
+export const setFilters = async (filters) => {
+    const response = await request.put(`${FILTERS_API}`, filters);
+    return response.data;
+}
