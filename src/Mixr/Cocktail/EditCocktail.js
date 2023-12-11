@@ -21,6 +21,7 @@ function EditCocktail() {
                         <input type="text" className="form-control w-100" placeholder={currentDrink.name} />
                     </div>
                 </div>
+                <br></br>
 
                 <div className="row">
                     <div className="col-3">
@@ -30,6 +31,7 @@ function EditCocktail() {
                         <textarea className="form-control w-100" rows="6" placeholder={currentDrink.description} />
                     </div>
                 </div>
+                <br></br>
 
                 <div className="row">
                     <div className="col-3">
@@ -39,6 +41,7 @@ function EditCocktail() {
                         <input type="text" className="form-control w-100" />
                     </div>
                 </div>
+                <br></br>
 
                 <div className="row">
                     <div className="col-3">
@@ -48,6 +51,7 @@ function EditCocktail() {
                         <input type="text" className="form-control w-100" placeholder="Mix the ingredients, shake, pour, enjoy." />
                     </div>
                 </div>
+                <br></br>
 
                 <div className="float-end">
                     <Link to={`/Cocktail/${id}`}>
