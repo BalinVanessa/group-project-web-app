@@ -8,7 +8,10 @@ function Navigation() {
 
     return (
         <div className="sticky-top w-100 d-flex align-items-center mxr-dark-blue-bg pb-2 pt-2">
-            <h2 className="mxr-med-gold ms-4 pt-2 pt-md-0 mt-md-2">mixr</h2>
+            <Link to="/Home" className="no-underline">
+                <h2 className="mxr-med-gold ms-4 pt-2 pt-md-0 mt-md-2">mixr</h2>
+            </Link>
+
             <div className="ms-auto me-3 me-md-4">
                 <Link to="#"><FaMagnifyingGlass className="mxr-med-gold icon-size-lg me-2 me-md-4" /></Link>
                 <Link to="#"><FaRegCircleUser className="mxr-med-gold icon-size-lg fa-regular ms-3 me-1" /></Link>

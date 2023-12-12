@@ -16,6 +16,7 @@ function Login() {
     const signIn = async () => {
         try {
             const user = await userClient.signin(credentials);
+            console.log(user);
             dispatch(setCurrentUser(user));
             navigate(`/Profile/${user._id}`);
         } catch (error) {
