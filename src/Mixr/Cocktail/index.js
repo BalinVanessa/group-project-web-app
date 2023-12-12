@@ -3,13 +3,13 @@ import { RiPencilFill } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
 import db from "../Database";
 import { Link, useLocation, useParams } from "react-router-dom";
-import * as client from "../Clients";
+import * as ourDrinksClient from "../Clients/ourDrinksClient";
 
 function Cocktail() {
     const { id } = useParams(); //grabs drinkID
     const drinks = db.drinks;
     const currentDrink = async () => {
-        await client.findDrinkById(id);
+        await ourDrinksClient.findDrinkById(id);
     };
     const { userID } = useParams(); //grabs user
     const users = db.users;

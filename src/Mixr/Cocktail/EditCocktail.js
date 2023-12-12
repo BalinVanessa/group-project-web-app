@@ -90,7 +90,7 @@ function EditCocktail() {
                 <br></br>
 
                 <div className="float-end">
-                    <Link to={`/Cocktail/${id}`}>
+                    <Link to={`/Cocktail/${idDrink}`}>
                         <button className="golden-button-small-outline me-2">Cancel</button>
                     </Link>
                     <button onClick={saveDrink} className="golden-button-small">Save</button>
