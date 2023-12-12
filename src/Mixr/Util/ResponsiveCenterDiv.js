@@ -1,6 +1,6 @@
-function ResponsiveCenterDiv({children}) {
+function ResponsiveCenterDiv({children, className}) {
     return (
-        <div className="row">
+        <div className={`row ${className ? className : ''}`}>
             <div className="col-3 d-none d-lg-block" />
             <div className="col d-flex justify-content-between align-items-center">
                 {children}

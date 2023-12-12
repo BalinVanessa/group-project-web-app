@@ -123,8 +123,8 @@ p {
 /* Styling hr bars */
 hr {
   height: 4px;
-  color:#E2D36C;
-  background-color: #E2D36C;
+  color:var(--mxr-med-gold);
+  background-color: var(--mxr-med-gold);
   border: none;
 }
 
@@ -138,8 +138,8 @@ hr.smaller {
 .golden-button-small {
   height: 45px;
   width: 100px;
-  background-color: #E2D36C;
-  color: #14232C;
+  background-color: var(--mxr-med-gold);
+  color: var(--mxr-light-blue);
   border-radius: 15px;
   border-width: 0px;
   font-family: 'Limelight', sans-serif;
@@ -166,10 +166,10 @@ hr.smaller {
 .golden-button-large-outline {
   height: 45px;
   width: 300px;
-  background-color: #14232C;
-  color: #E2D36C;
+  background-color: var(--mxr-light-blue);
+  color: var(--mxr-med-gold);
   border-radius: 15px;
-  border-color: #E2D36C;
+  border-color: var(--mxr-med-gold);
   border-width: 2px;
   font-family: 'Limelight', sans-serif;
   font-family: 'Sulphur Point', sans-serif;
@@ -180,10 +180,10 @@ hr.smaller {
 .golden-button-med-outline {
   height: 45px;
   width: 200px;
-  background-color: #14232C;
-  color: #E2D36C;
+  background-color: var(--mxr-light-blue);
+  color: var(--mxr-med-gold);
   border-radius: 15px;
-  border-color: #E2D36C;
+  border-color: var(--mxr-med-gold);
   border-width: 2px;
   font-family: 'Limelight', sans-serif;
   font-family: 'Sulphur Point', sans-serif;
@@ -194,10 +194,10 @@ hr.smaller {
 .golden-button-small-outline {
   height: 45px;
   width: 100px;
-  background-color: #14232C;
-  color: #E2D36C;
+  background-color: var(--mxr-light-blue);
+  color: var(--mxr-med-gold);
   border-radius: 15px;
-  border-color: #E2D36C;
+  border-color: var(--mxr-med-gold);
   border-width: 2px;
   font-family: 'Limelight', sans-serif;
   font-family: 'Sulphur Point', sans-serif;
@@ -268,7 +268,7 @@ hr.smaller {
   padding-left: 16px;
   padding-right: 16px;
   margin-bottom: 24px;
-  color: #F0EBC5;
+  color: var(--mxr-light-gold);
 }
 
 .drinkCard-text>p {
@@ -277,10 +277,10 @@ hr.smaller {
 
 /* REVIEW STYLING */
 .review {
-  background-color: #101615;
+  background-color: var(--mxr-dark-blue);
   border-radius: 24px;
   padding: 32px;
-  color:#F0EBC5;
+  color:var(--mxr-light-gold);
   margin-top: 24px;
   margin-bottom: 24px;
 }
