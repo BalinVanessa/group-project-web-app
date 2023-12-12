@@ -4,7 +4,7 @@ const request = axios.create({
 });
 
 const BASE_API = process.env.REACT_APP_BASE_API_URL;
-const FILTERS_API = `${BASE_API}/api/filters`;
+const FILTERS_API = `${BASE_API}api/filters`;
 
 export const getCurrentFilters = async () => {
     const response = await request.get(`${FILTERS_API}`);

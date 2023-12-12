@@ -7,10 +7,10 @@ const externalClient = axios.create({
     withCredentials: false
 });
 
-const EXTERNAL_BASE_API = process.env.REACT_APP_EXTERNAL_API_BASE_URL || "https://www.thecocktaildb.com/api/json/v1/1";
+const EXTERNAL_BASE_API = process.env.REACT_APP_EXTERNAL_API_BASE_URL || "https://www.thecocktaildb.com/api/json/v1/1/";
 const BASE_API = process.env.REACT_APP_BASE_API_URL;
-const EXTERNAL_LIST_INGREDIENTS_API = `${EXTERNAL_BASE_API}/list.php?i=list`;
-const INGREDIENTS_API = `${BASE_API}/api/ingredients`;
+const EXTERNAL_LIST_INGREDIENTS_API = `${EXTERNAL_BASE_API}list.php?i=list`;
+const INGREDIENTS_API = `${BASE_API}api/ingredients`;
 
 export const findAllExternalIngredients = async () => {
     const response = await externalClient.get(`${EXTERNAL_LIST_INGREDIENTS_API}`);
