@@ -11,15 +11,34 @@ function Search() {
 
     const { searchContent } = useParams();
     const [currentFilters, setCurrentFilters] = useState({
-        alcoholic: true,
-        ingredients: ["vodka", "lime"]
+        alcoholic: null,
+        ingredients: []
     });
 
     const fetchCurrentFilters = async () => {
-        console.log("fetching current filters");
-        // const filters = await filterClient.getCurrentFilters();
-        // setCurrentFilters(filters);  
+        const filters = await filterClient.getCurrentFilters();
+        console.log(`fetched filters: ${JSON.stringify(filters)}`)
+        setCurrentFilters(filters !== undefined ? filters : currentFilters);
     };
+
+    const setSessionFilters = async() => {
+        try {
+            const response = await filterClient.setFilters(currentFilters);
+            return response.status();
+        } catch (error) {
+            console.error(`Error setting session filters: ${error}`)
+        }
+    }
+
+    const handleDeleteIngredientFilter = (ingredient) => {
+        const newFilters = {
+            ...currentFilters,
+            ingredients: currentFilters.ingredients.filter((i) => i !== ingredient)
+        };
+
+        setCurrentFilters(newFilters);
+        setSessionFilters(currentFilters);
+    }
 
     useEffect(() => {
         fetchCurrentFilters();
@@ -37,10 +56,9 @@ function Search() {
                     <FilterForm updateFilters={fetchCurrentFilters} startingFilters={currentFilters} />
                 </div>
                 <div className="d-flex flex-row flex-wrap">
-                    {currentFilters.ingredients.map((i) => {
-                        <IngredientFilterTag ingredient={i} isInForm={false}/>
-                    })}
-                    <IngredientFilterTag ingredient={"Vodka"}/>
+                    {currentFilters && currentFilters.ingredients.map((i) => (
+                        <IngredientFilterTag ingredient={i} isInForm={false} deleteIngredient={handleDeleteIngredientFilter}/>
+                    ))}
                 </div>
             </ResponsiveCenterDiv>
         </>

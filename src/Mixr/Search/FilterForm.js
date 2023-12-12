@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
-import * as filtersClient from './../Clients/filtersClient.js'
+import * as filterClient from './../Clients/filtersClient.js'
 import IngredientFilterTag from "./IngredientFilterTag.js";
 
 function FilterForm({ updateFilters, startingFilters }) {
-    /*
-        filters: {
-            "alcoholic": true,
-            ingredients: [
-                "vodka", "lime", etc...
-            ]
-        }
-    */
     const [currentFilters, setCurrentFilters] = useState(null);
-    const [currentIngredient, setCurrentIngredient] = useState();
+    const [currentIngredient, setCurrentIngredient] = useState('');
 
     const handleDeleteIngredientFilter = (ingredient) => {
         const newFilters = {
@@ -30,19 +22,19 @@ function FilterForm({ updateFilters, startingFilters }) {
         }
 
         if (!ingredientExists(currentIngredient)) {
-            console.log("Ingredient does not exist"); // or add ingredient to mongoDB (?)
+            console.log("Ingredient does not exist"); // ingredients will be added to mongo in create cocktail. no creating ingredients for searchers
             return;
         }
 
-        // update local state of currentFilters
         const newFilters = {
-            ...currentFilters.alcoholic,
+            ...currentFilters,
             ingredients: [
                 ...currentFilters.ingredients,
                 currentIngredient
             ]
         };
 
+        // update local state of currentFilters
         setCurrentFilters(newFilters);
 
         setCurrentIngredient('');
@@ -50,18 +42,26 @@ function FilterForm({ updateFilters, startingFilters }) {
 
     const ingredientExists = (ingredient) => {
         console.log(`checking if ${ingredient} exists`);
-        // check if ingredient exists
+        // TODO: check if ingredient exists
+
+        // query mongoDB
+        // query external API
         return true;
     };
 
-    const handleUpdateFilters = (event) => {
-        // set filters in session to local state filters using client
-        updateFilters();
+    const handleUpdateFilters = async (event) => {
+        try {
+            await filterClient.setFilters(currentFilters);
+            updateFilters();
+        } catch (error) {
+            console.error(`Error setting session filters: ${error}`)
+        }
     }
 
     useEffect(() => {
         setCurrentFilters(startingFilters);
-    }, []);
+        console.log(`starting filters: ${startingFilters.ingredients}`);
+    }, [startingFilters]);
 
     return (
         <form className="dropdown-menu p-4" style={{ width: "300px" }}>
@@ -86,12 +86,12 @@ function FilterForm({ updateFilters, startingFilters }) {
                 <label className="form-check-label" htmlFor="ingredient-search-input"><h5>Ingredients</h5></label>
                 <div className="mb-3">
                     <input type="text" className="form-control w-75 ingred-search" placeholder="Search for ingredients..." id="ingredient-search-input"
-                        onChange={(e) => setCurrentIngredient(e.target.value)} value={currentIngredient}/>
+                        onChange={(e) => setCurrentIngredient(e.target.value)} value={currentIngredient} />
                     <button className="golden-button-small add-ingred-button margin-left-15" onClick={handleAddIngredientFilter}>+</button>
                 </div>
                 <div className="filter-tags-div">
                     {currentFilters && currentFilters.ingredients.map((i) => (
-                        <IngredientFilterTag ingredient={i} deleteIngredient={handleDeleteIngredientFilter} isInForm={true}/>
+                        <IngredientFilterTag ingredient={i} deleteIngredient={handleDeleteIngredientFilter} isInForm={true} />
                     ))}
                 </div>
             </div>
