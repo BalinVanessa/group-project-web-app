@@ -5,6 +5,11 @@ import IngredientFilterTag from "./IngredientFilterTag.js";
 function FilterForm({ updateFilters, startingFilters }) {
     const [currentFilters, setCurrentFilters] = useState(null);
     const [currentIngredient, setCurrentIngredient] = useState('');
+    const [alcoholicSelection, setAlcoholicSelection] = useState(null);
+
+    const handleAlcoholicChange = (selection) => {
+        setAlcoholicSelection((previousValue) => (previousValue === selection ? null : selection));
+    }
 
     const handleDeleteIngredientFilter = (ingredient) => {
         const newFilters = {
@@ -51,7 +56,10 @@ function FilterForm({ updateFilters, startingFilters }) {
 
     const handleUpdateFilters = async (event) => {
         try {
-            await filterClient.setFilters(currentFilters);
+            await filterClient.setFilters({
+                alcoholic: alcoholicSelection,
+                ingredients: currentFilters.ingredients
+            });
             updateFilters();
         } catch (error) {
             console.error(`Error setting session filters: ${error}`)
@@ -60,7 +68,7 @@ function FilterForm({ updateFilters, startingFilters }) {
 
     useEffect(() => {
         setCurrentFilters(startingFilters);
-        console.log(`starting filters: ${startingFilters.ingredients}`);
+        setAlcoholicSelection(startingFilters.alcoholic);
     }, [startingFilters]);
 
     return (
@@ -68,15 +76,24 @@ function FilterForm({ updateFilters, startingFilters }) {
             <div onClick={(event) => event.stopPropagation()}>
                 <div className="mb-3">
                     <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="alcoholic-check" />
+                        <input 
+                        type="radio" 
+                        className="form-check-input"
+                        id="alcoholic-check" 
+                        checked = {alcoholicSelection === 'Alcoholic'}
+                        onClick={() => handleAlcoholicChange('Alcoholic')}/>
                         <label className="form-check-label" htmlFor="alcoholic-check">
                             Alcoholic
                         </label>
                     </div>
                 </div>
                 <div className="mb-3">
-                    <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="non-alcoholic-check" />
+                    <div className="form-check"><input 
+                        type="radio" 
+                        className="form-check-input"
+                        id="non-alcoholic-check" 
+                        checked = {alcoholicSelection === 'Non alcoholic'}
+                        onClick={() => handleAlcoholicChange('Non alcoholic')}/>
                         <label className="form-check-label" htmlFor="non-alcoholic-check">
                             Non-Alcoholic
                         </label>

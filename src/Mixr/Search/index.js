@@ -17,14 +17,12 @@ function Search() {
 
     const fetchCurrentFilters = async () => {
         const filters = await filterClient.getCurrentFilters();
-        console.log(`fetched filters: ${JSON.stringify(filters)}`)
         setCurrentFilters(filters !== undefined ? filters : currentFilters);
     };
 
-    const setSessionFilters = async() => {
+    const setSessionFilters = async(filters) => {
         try {
-            const response = await filterClient.setFilters(currentFilters);
-            return response.status();
+            await filterClient.setFilters(filters);
         } catch (error) {
             console.error(`Error setting session filters: ${error}`)
         }
@@ -37,7 +35,17 @@ function Search() {
         };
 
         setCurrentFilters(newFilters);
-        setSessionFilters(currentFilters);
+        setSessionFilters(newFilters);
+    }
+
+    const handleDeleteAlcoholicFilter = (filter) => {
+        const newFilters = {
+            ...currentFilters,
+            alcoholic: null
+        }
+
+        setCurrentFilters(newFilters);
+        setSessionFilters(newFilters);
     }
 
     useEffect(() => {
@@ -49,13 +57,14 @@ function Search() {
             <div style={{ paddingTop: "50px" }} />
             <SearchBar existingSearchContent={searchContent} />
             <ResponsiveCenterDiv className="filters-div align-content-top">
-                <div className="dropdown margin-left-15" style={{ marginTop: "15px", marginRight: "15px" }}>
+                <div className="dropdown margin-left-15" style={{ marginTop: "15px", marginRight: "15px", marginBottom:"auto" }}>
                     <button className="golden-button-small dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Filter
                     </button>
                     <FilterForm updateFilters={fetchCurrentFilters} startingFilters={currentFilters} />
                 </div>
-                <div className="d-flex flex-row flex-wrap">
+                <div className="d-flex flex-row flex-wrap align-content-center">
+                    {currentFilters.alcoholic !== null && <IngredientFilterTag ingredient={currentFilters.alcoholic} isInForm={false} deleteIngredient={handleDeleteAlcoholicFilter} />}
                     {currentFilters && currentFilters.ingredients.map((i) => (
                         <IngredientFilterTag ingredient={i} isInForm={false} deleteIngredient={handleDeleteIngredientFilter}/>
                     ))}
