@@ -8,7 +8,7 @@ import * as ourDrinksClient from "../Clients/ourDrinksClient";
 
 function EditCocktail() {
     const { idDrink } = useParams(); //grabs drinkID
-    const drinks = db.drinks;
+    //const drinks = db.drinks;
 
     const [currentDrink, setCurrentDrink] = useState(null);
     const navigate = useNavigate();
@@ -16,13 +16,15 @@ function EditCocktail() {
         const drink = await ourDrinksClient.findDrinkById(idDrink);
         setCurrentDrink(drink);
     };
-    useEffect(() => {
-        fetchDrink();
-    }, []);
-
     const saveDrink = async () => {
         await ourDrinksClient.updateDrink(currentDrink);
     };
+
+    useEffect(() => {
+        fetchDrink();
+        saveDrink();
+    }, []);
+
 
     return (
         <div>

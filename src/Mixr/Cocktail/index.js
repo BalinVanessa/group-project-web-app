@@ -1,19 +1,35 @@
 import { FaStar } from "react-icons/fa6";
 import { RiPencilFill } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
-import db from "../Database";
+import { useEffect, useState } from "react";
+
 import { Link, useLocation, useParams } from "react-router-dom";
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
 
 function Cocktail() {
     const { id } = useParams(); //grabs drinkID
-    const drinks = db.drinks;
-    const currentDrink = async () => {
-        await ourDrinksClient.findDrinkById(id);
+    const [currentDrink, setCurrentDrink] = useState(null);
+
+    const getDrink = async (drinkID) => {
+        const drink = await ourDrinksClient.findDrinkById(drinkID);
+        console.log(drink);
+        console.log(drink.strDrink);
+        return await drink;
+    }
+
+    const fetchDrink = async () => {
+        const drink = await ourDrinksClient.findDrinkById(id);
+        setCurrentDrink(drink);
     };
-    const { userID } = useParams(); //grabs user
-    const users = db.users;
-    const currentUser = userID && users.find((user) => user.userID == userID);
+
+    useEffect(() => {
+        fetchDrink();
+    }, []);
+
+
+    //const { userID } = useParams(); //grabs user
+    //const users = db.users;
+    //const currentUser = userID && users.find((user) => user.userID == userID);
 
     // generates the given amount of star icons
     function makeStars(num) {
@@ -29,10 +45,10 @@ function Cocktail() {
     return (
         <div className="p-5">
             <div className="mxr-light-blue-bg d-flex flex-row">
-                <img className="cocktail-image" src={currentDrink.image}></img>
+                <img className="cocktail-image" src="./Images/Negroni.jpg"></img>
                 <div className="ps-5">
                     <div className="d-flex flex-row">
-                        <h1 className="mxr-dark-gold">{currentDrink.name}</h1>
+                        <h1 className="mxr-dark-gold">{currentDrink.strDrink}</h1>
                         <Link to={"#"}>
                             <button className="golden-button-small ms-5"><FaRegHeart /></button>
                         </Link>
@@ -42,11 +58,11 @@ function Cocktail() {
                         </Link>
                     </div>
                     <div className="mxr-light-gold">
-                        {makeStars(currentDrink.numStars)}
+                        {makeStars(4)}
                     </div>
+
                     <div className="spacer-m"></div>
-                    <h5 className="mxr-light-gold">{currentDrink.description}</h5>
-                    <div className="spacer-m"></div>
+
                     <h5 className="mxr-dark-gold">Ingredients:</h5>
                     <p>
                         <ul className="mxr-light-gold">
