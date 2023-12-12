@@ -58,13 +58,13 @@ function EditCocktail() {
                         <h4 className="mxr-med-gold">Alcoholic/Non-alcoholic</h4>
                     </div>
                     <div className="col-9">
-                        <input type="checkbox" id="alcoholic-checkbox" name="alcoholic" 
+                        <input type="radio" id="alcoholic" name="drinkType" 
                         onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })}/>
-                        <label for="alcoholic-checkbox">Alcoholic</label>
+                        <label for="alcoholic">Alcoholic</label>
                         <br></br>
-                        <input type="checkbox" id="non-alcoholic-checkbox" name="non-alcoholic"
+                        <input type="radio" id="non-alcoholic" name="drinkType"
                         onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })}/>
-                        <label for="non-alcoholic-checkbox">Non-Alcoholic</label>
+                        <label for="non-alcoholic">Non-Alcoholic</label>
                     </div>
                 </div>
 
