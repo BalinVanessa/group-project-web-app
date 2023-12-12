@@ -9,26 +9,30 @@ import Cocktail from "./Cocktail";
 import Search from "./Search";
 import EditCocktail from "./Cocktail/EditCocktail";
 import Review from "./Review";
+import store from "./store";
+import { Provider } from "react-redux";
 
 function Mixr() {
     return (
-        <div>
-            <Navigation />
-            <Routes>
-                <Route path="Profile/:userID" element={<Profile/>}/>
-                <Route path="Login" element={<Login/>}/>
-                <Route path="SignUp" element={<SignUp/>}/>
-                <Route path="/" element={<Navigate to="/Home"/>} />
-                <Route path="/Home" element={<Home />} />
-                <Route path="/Home/:userID" element={<Home />} />
-                <Route path="/Search/:searchContent" element={<Search />} />
-                <Route path="/Profile/:userID" element={<Profile/>}/>
-                <Route path="/EditProfile/:userID" element={<ProfileEditor/>}/>
-                <Route path="/Cocktail/:id" element={<Cocktail/>}/>
-                <Route path="/EditCocktail/:id" element={<EditCocktail/>}/>
-                <Route path="/Review" element={<Review/>}/>
-            </Routes>
-        </div>
+        <Provider store={store}>
+            <div>
+                <Navigation />
+                <Routes>
+                    <Route path="Profile/:userID" element={<Profile />} />
+                    <Route path="Login" element={<Login />} />
+                    <Route path="SignUp" element={<SignUp />} />
+                    <Route path="/" element={<Navigate to="/Home" />} />
+                    <Route path="/Home" element={<Home />} />
+                    <Route path="/Home/:userID" element={<Home />} />
+                    <Route path="/Search/:searchContent" element={<Search />} />
+                    <Route path="/Profile/:userID" element={<Profile />} />
+                    <Route path="/EditProfile/:userID" element={<ProfileEditor />} />
+                    <Route path="/Cocktail/:id" element={<Cocktail />} />
+                    <Route path="/EditCocktail/:id" element={<EditCocktail />} />
+                    <Route path="/Review" element={<Review />} />
+                </Routes>
+            </div>
+        </Provider>
     )
 
 }

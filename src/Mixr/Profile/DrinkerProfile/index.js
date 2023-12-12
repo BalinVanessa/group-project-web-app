@@ -1,6 +1,4 @@
 import { FaS, FaStar, FaStarHalf } from "react-icons/fa6";
-import { useParams } from "react-router";
-import db from "../../Database";
 import * as followsClient from "../../Clients/followsClient";
 import * as favoritesClient from "../../Clients/favoritesClient";
 import * as ourDrinksClient from "../../Clients/ourDrinksClient";
@@ -22,7 +20,7 @@ function DrinkerProfile({ currentUser }) {
     // const favDrinks = currentUser.favoriteDrinks.map((id) => getDrink(id));
     const fetchUserFavorites = async () => {
         // get all favorite objects involving the current user
-        const favs = await favoritesClient.findDrinksThatUserFav(currentUser._id.$oid);
+        const favs = await favoritesClient.findDrinksThatUserFav(currentUser._id);
         // get the drinks
         const userFavDrinks = await Promise.all(favs.map((favorite) => getDrink(favorite.idDrink)));
         console.log(userFavDrinks);
@@ -43,14 +41,14 @@ function DrinkerProfile({ currentUser }) {
 
     // the user's followers 
     const fetchFollowers = async () => {
-        const follows = await followsClient.findFollowersOfUser(currentUser._id.$oid);
+        const follows = await followsClient.findFollowersOfUser(currentUser._id);
         const followers = follows.map((follow) => follow.follower);
         setFollowers(followers);
     }
 
     // who the user is following
     const fetchFollowing = async () => {
-        const follows = await followsClient.findFollowedUsersByUser(currentUser._id.$oid);
+        const follows = await followsClient.findFollowedUsersByUser(currentUser._id);
         const following = follows.map((follow) => follow.followed);
         setFollowing(following);
     }

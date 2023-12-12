@@ -1,5 +1,9 @@
 import { GiMartini } from "react-icons/gi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import * as userClient from "../Users/usersClient";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../Users/reducer";
 
 //have to align text labels
 function SignUp() {
