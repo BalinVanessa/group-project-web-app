@@ -1,19 +1,34 @@
 import { FaS, FaStar, FaStarHalf } from "react-icons/fa6";
 import { useParams } from "react-router";
 import db from "../../Database";
+import * as followsClient from "../../Clients/followsClient";
+import * as favoritesClient from "../../Clients/favoritesClient";
+import * as ourDrinksClient from "../../Clients/ourDrinksClient";
+import { useEffect, useState } from "react";
 
 function DrinkerProfile({ currentUser }) {
-    // the drink database
-    const drinks = db.drinks;
-    const users = db.users;
+    const [following, setFollowing] = useState([]);
+    const [followers, setFollowers] = useState([]);
+    const [favorites, setFavorites] = useState([]);
 
-    // get the drink from the drink JSON file based on the unique id
-    function getDrink(drinkID) {
-        return (drinks.find((drink) => drink.id == drinkID))
+    // get the drink from the drink JSON file based on the drink id
+    const getDrink = async (drinkID) => {
+        const drink = await ourDrinksClient.findDrinkById(drinkID);
+        console.log(drink);
+        return await drink;
     }
 
     // the user's fav drinks, obtained from their ids
-    const favDrinks = currentUser.favoriteDrinks.map((id) => getDrink(id));
+    // const favDrinks = currentUser.favoriteDrinks.map((id) => getDrink(id));
+    const fetchUserFavorites = async () => {
+        // get all favorite objects involving the current user
+        const favs = await favoritesClient.findDrinksThatUserFav(currentUser._id.$oid);
+        // get the drinks
+        const userFavDrinks = await Promise.all(favs.map((favorite) => getDrink(favorite.idDrink)));
+        console.log(userFavDrinks);
+        setFavorites(userFavDrinks);
+        console.log(userFavDrinks);
+    }
 
     // generates the given amount of star icons
     function makeStars(num) {
@@ -27,27 +42,39 @@ function DrinkerProfile({ currentUser }) {
     }
 
     // the user's followers 
-    const followers = users.filter((user) => user.following.includes(currentUser.userID))
+    const fetchFollowers = async () => {
+        const follows = await followsClient.findFollowersOfUser(currentUser._id.$oid);
+        const followers = follows.map((follow) => follow.follower);
+        setFollowers(followers);
+    }
 
-    // who the user's following
-    const following = currentUser.following.map((id) => users.find((user) => user.userID == id))
+    // who the user is following
+    const fetchFollowing = async () => {
+        const follows = await followsClient.findFollowedUsersByUser(currentUser._id.$oid);
+        const following = follows.map((follow) => follow.followed);
+        setFollowing(following);
+    }
 
-    // Still need to implement following (might make this own component)
-    // Still need to implement reviews (might make this own component)
+    useEffect(() => {
+        fetchFollowers();
+        fetchFollowing();
+        fetchUserFavorites();
+    }, []);
+
     return (
         <div>
             <div className="flush-right">
                 <h3 className="mxr-med-gold">Your Favorite Recipes</h3>
                 <div className="d-inline-flex cardRow mt-4 w-100">
-                    {favDrinks.map((drink) => (
+                    {favorites.map((drink) => (
                         <div className="drinkCard mxr-med-blue-bg">
-                            <img className="drinkCard-img" src={drink.image} />
+                            <img className="drinkCard-img" src="./Images/EspressoMartini.jpg" />
                             <div className="drinkCard-text">
-                                <h4>{drink.name}</h4>
+                                <h4>{drink.strDrink}</h4>
                                 <div className="d-inline">
-                                    {makeStars(drink.numStars)}
+                                    {makeStars(4)}
                                 </div>
-                                <p>{drink.description.substring(0, 128) + "..."}</p>
+                                <p>{drink.strInstructions.substring(0, 128) + "..."}</p>
                             </div>
                         </div>
                     ))}
@@ -59,7 +86,7 @@ function DrinkerProfile({ currentUser }) {
                     {followers.map((follower) => (
                         <div className="profile-card">
                             <img className="circle-img mb-4" src="./Images/thegoat.jpg" />
-                            <h5 className="mxr-light-gold">{follower.name}</h5>
+                            <h5 className="mxr-light-gold">{follower.firstName} {follower.lastName}</h5>
                         </div>
                     ))}
                 </div>
@@ -69,7 +96,7 @@ function DrinkerProfile({ currentUser }) {
                     {following.map((follow) => (
                         <div className="profile-card">
                             <img className="circle-img mb-4" src="./Images/thegoat.jpg" />
-                            <h5 className="mxr-light-gold">{follow.name}</h5>
+                            <h5 className="mxr-light-gold">{follow.firstName} {follow.lastName}</h5>
                         </div>
                     ))}
                 </div>
