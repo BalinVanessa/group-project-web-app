@@ -1,10 +1,17 @@
 import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import db from "../Database"
+import * as client from "../Clients";
+
 
 function EditCocktail() {
     const { id } = useParams(); //grabs drinkID
     const drinks = db.drinks;
-    const currentDrink = drinks.find((drink) => drink.id == id)
+    const currentDrink = async () => {
+        await client.findDrinkById(id);
+    };
 
     return (
         <div>

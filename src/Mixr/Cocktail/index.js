@@ -3,12 +3,14 @@ import { RiPencilFill } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
 import db from "../Database";
 import { Link, useLocation, useParams } from "react-router-dom";
+import * as client from "../Clients";
 
 function Cocktail() {
     const { id } = useParams(); //grabs drinkID
     const drinks = db.drinks;
-    const currentDrink = drinks.find((drink) => drink.id == id)
-
+    const currentDrink = async () => {
+        await client.findDrinkById(id);
+    };
     const { userID } = useParams(); //grabs user
     const users = db.users;
     const currentUser = userID && users.find((user) => user.userID == userID);
@@ -32,11 +34,11 @@ function Cocktail() {
                     <div className="d-flex flex-row">
                         <h1 className="mxr-dark-gold">{currentDrink.name}</h1>
                         <Link to={"#"}>
-                        <button className="golden-button-small ms-5"><FaRegHeart/></button>
+                            <button className="golden-button-small ms-5"><FaRegHeart /></button>
                         </Link>
-                        
+
                         <Link to={`/EditCocktail/${id}`}>
-                            <button className="golden-button-small ms-2"><RiPencilFill/></button>
+                            <button className="golden-button-small ms-2"><RiPencilFill /></button>
                         </Link>
                     </div>
                     <div className="mxr-light-gold">
