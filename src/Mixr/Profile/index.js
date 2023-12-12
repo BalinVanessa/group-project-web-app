@@ -47,7 +47,7 @@ function Profile() {
                             <div>
                                 <p className="mxr-med-gold">{profile.email}</p>
                                 <div className="d-inline-flex flex-wrap mt-1">
-                                    <Link to={`/EditProfile/${userID}`}>
+                                    <Link to={`/EditProfile`}>
                                         <button className="golden-button-med-outline me-3">Edit Profile</button>
                                     </Link>
                                     <button onClick={signout} className="golden-button-med-outline">Logout</button>
