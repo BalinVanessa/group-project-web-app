@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import SearchBar from "./SearchBar";
-import './index.css';
+import '../index.css';
 import ResponsiveCenterDiv from "../Util/ResponsiveCenterDiv";
 import FilterForm from "./FilterForm";
 import IngredientFilterTag from "./IngredientFilterTag";

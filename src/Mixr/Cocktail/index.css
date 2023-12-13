@@ -2,6 +2,19 @@
     height: 40px;
 }
 
+.red-button-small {
+    height: 40px;
+    width: 100px;
+    background-color: tomato;
+    color: #14232C;
+    border-radius: 15px;
+    border-width: 0px;
+    font-family: 'Limelight', sans-serif;
+    font-family: 'Sulphur Point', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+}
+
 .margin-left-15 {
     margin-left: 15px;
 }

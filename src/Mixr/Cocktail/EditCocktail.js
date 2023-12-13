@@ -1,7 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { FaPlus } from "react-icons/fa6";
+import { FaTrashCan } from "react-icons/fa6";
+
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
+import './index.css';
 
 
 function EditCocktail() {
@@ -64,9 +68,47 @@ function EditCocktail() {
                     <div className="col-9">
                         <div className="d-flex flex-row">
                             <input type="text" className="form-control w-100" />
-                            <button className="golden-button-small ms-2">Add</button>
+                            <button className="golden-button-small ms-2"><FaPlus/></button>
                         </div>
-                        <div className="mxr-med-gold">Test</div>
+                        <div className="d-flex flex-row mt-2">
+                            <div className="mxr-med-gold w-100">Add items here</div>
+                            <button className="red-button-small ms-2"><FaTrashCan/></button>
+                        </div>
+                        <div className="d-flex flex-row mt-2">
+                            <div className="mxr-med-gold w-100">Add items here</div>
+                            <button className="red-button-small ms-2"><FaTrashCan/></button>
+                        </div>
+                        <div className="d-flex flex-row mt-2">
+                            <div className="mxr-med-gold w-100">Add items here</div>
+                            <button className="red-button-small ms-2"><FaTrashCan/></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className="spacer-s"></div>
+
+                <div className="row">
+                    <div className="col-3">
+                        <h4 className="mxr-med-gold">Measurements:</h4>
+                    </div>
+                    <div className="col-9">
+                        <div className="d-flex flex-row">
+                            <input type="text" className="form-control w-100" />
+                            <button className="golden-button-small ms-2"><FaPlus/></button>
+                        </div>
+                        <div className="d-flex flex-row mt-2">
+                            <div className="mxr-med-gold w-100">Add items here</div>
+                            <button className="red-button-small ms-2"><FaTrashCan/></button>
+                        </div>
+                        <div className="d-flex flex-row mt-2">
+                            <div className="mxr-med-gold w-100">Add items here</div>
+                            <button className="red-button-small ms-2"><FaTrashCan/></button>
+                        </div>
+                        <div className="d-flex flex-row mt-2">
+                            <div className="mxr-med-gold w-100">Add items here</div>
+                            <button className="red-button-small ms-2"><FaTrashCan/></button>
+                        </div>
                     </div>
                 </div>
 
