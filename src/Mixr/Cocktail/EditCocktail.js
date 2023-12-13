@@ -127,17 +127,13 @@ function EditCocktail() {
                             </div>
                             <button className="golden-button-small ms-2"><FaPlus /></button>
                         </div>
-                        <div className="d-flex flex-row mt-2">
-                            <div className="mxr-med-gold w-100">Add items here</div>
-                            <button className="red-button-small ms-2"><FaTrashCan /></button>
-                        </div>
-                        <div className="d-flex flex-row mt-2">
-                            <div className="mxr-med-gold w-100">Add items here</div>
-                            <button className="red-button-small ms-2"><FaTrashCan /></button>
-                        </div>
-                        <div className="d-flex flex-row mt-2">
-                            <div className="mxr-med-gold w-100">Add items here</div>
-                            <button className="red-button-small ms-2"><FaTrashCan /></button>
+                        <div>
+                            {currentDrink?.ingredients.map((ingredient) => (
+                                <div className="d-flex flex-row mt-2">
+                                    <div className="mxr-med-gold w-100">{ingredient}</div>
+                                    <button className="red-button-small ms-2"><FaTrashCan /></button>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -154,17 +150,13 @@ function EditCocktail() {
                             <input type="text" className="form-control w-100" />
                             <button className="golden-button-small ms-2"><FaPlus /></button>
                         </div>
-                        <div className="d-flex flex-row mt-2">
-                            <div className="mxr-med-gold w-100">Add items here</div>
-                            <button className="red-button-small ms-2"><FaTrashCan /></button>
-                        </div>
-                        <div className="d-flex flex-row mt-2">
-                            <div className="mxr-med-gold w-100">Add items here</div>
-                            <button className="red-button-small ms-2"><FaTrashCan /></button>
-                        </div>
-                        <div className="d-flex flex-row mt-2">
-                            <div className="mxr-med-gold w-100">Add items here</div>
-                            <button className="red-button-small ms-2"><FaTrashCan /></button>
+                        <div>
+                            {currentDrink?.measures.map((measure) => (
+                                <div className="d-flex flex-row mt-2">
+                                    <div className="mxr-med-gold w-100">{measure}</div>
+                                    <button className="red-button-small ms-2"><FaTrashCan /></button>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
