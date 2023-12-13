@@ -12,13 +12,6 @@ function Cocktail() {
     const [currentDrink, setCurrentDrink] = useState(null);
     //const [mixologistName, setMixologistName] = useState(null);
 
-    const getDrink = async (drinkID) => {
-        const drink = await ourDrinksClient.findDrinkById(drinkID);
-        console.log(drink);
-        console.log(drink.strDrink);
-        return await drink;
-    }
-
     /*
     const getUserWhoMadeDrink = async  (userID) => {
         const user = await userClient.findUserById(userID);
@@ -27,10 +20,8 @@ function Cocktail() {
     */
 
     const fetchDrink = async () => {
-        const drink = await getDrink(id);
+        const drink = await ourDrinksClient.findDrinkById(id);
         setCurrentDrink(drink);
-        console.log(drink.strDrink);
-        console.log(drink.strAlcoholic);
     };
 
     /*
