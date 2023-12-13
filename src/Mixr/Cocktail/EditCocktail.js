@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
 
@@ -8,20 +7,21 @@ import * as ourDrinksClient from "../Clients/ourDrinksClient";
 function EditCocktail() {
     const { id } = useParams(); //grabs drinkID
     const [currentDrink, setCurrentDrink] = useState(null);
-    
+
     const fetchDrink = async () => {
         const drink = await ourDrinksClient.findDrinkById(id);
         setCurrentDrink(drink);
     };
+    /*
     const saveDrink = async () => {
         await ourDrinksClient.updateDrink(currentDrink);
     };
+    */
 
     useEffect(() => {
         fetchDrink();
-        saveDrink();
-    }, []);
-
+        // saveDrink();
+    }, [id]);
 
     return (
         <div>
@@ -35,64 +35,60 @@ function EditCocktail() {
                         <h4 className="mxr-med-gold">Cocktail Name:</h4>
                     </div>
                     <div className="col-9">
-                        <input type="text" className="form-control w-100" placeholder={currentDrink.strDrink} 
-                        onChange={(e) => setCurrentDrink({ ...currentDrink, strDrink: e.target.value })}/>
+                        <input type="text" className="form-control w-100" value={currentDrink?.strDrink}
+                            onChange={(e) => setCurrentDrink({ ...currentDrink, strDrink: e.target.value })} />
                     </div>
                 </div>
-                <br></br>
+                <div className="spacer-s"></div>
 
                 <div className="row">
                     <div className="col-3">
-                        <h4 className="mxr-med-gold">Description:</h4>
+                        <h4 className="mxr-med-gold">Drink Type</h4>
                     </div>
                     <div className="col-9">
-                        <textarea className="form-control w-100" rows="6" placeholder={currentDrink.description} 
-                        onChange={(e) => setCurrentDrink({ ...currentDrink, description: e.target.value })}/>
-                    </div>
-                </div>
-                <br></br>
-
-                <div className="row">
-                    <div className="col-3">
-                        <h4 className="mxr-med-gold">Alcoholic/Non-alcoholic</h4>
-                    </div>
-                    <div className="col-9">
-                        <input type="radio" id="alcoholic" name="drinkType" 
-                        onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })}/>
-                        <label for="alcoholic">Alcoholic</label>
-                        <br></br>
+                        <input type="radio" id="alcoholic" name="drinkType"
+                            onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })} />
+                        <label className="mxr-light-gold ms-2" for="alcoholic">Alcoholic</label>
+                        <div className="spacer-xs"></div>
                         <input type="radio" id="non-alcoholic" name="drinkType"
-                        onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })}/>
-                        <label for="non-alcoholic">Non-Alcoholic</label>
+                            onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })} />
+                        <label className="mxr-light-gold ms-2" for="non-alcoholic">Non-Alcoholic</label>
                     </div>
                 </div>
+                <div className="spacer-s"></div>
 
                 <div className="row">
                     <div className="col-3">
                         <h4 className="mxr-med-gold">Ingredients:</h4>
                     </div>
                     <div className="col-9">
-                        <input type="text" className="form-control w-100" />
+                        <div className="d-flex flex-row">
+                            <input type="text" className="form-control w-100" />
+                            <button className="golden-button-small ms-2">Add</button>
+                        </div>
+                        <div className="mxr-med-gold">Test</div>
                     </div>
                 </div>
-                <br></br>
+
+
+                <div className="spacer-s"></div>
 
                 <div className="row">
                     <div className="col-3">
                         <h4 className="mxr-med-gold">Directions:</h4>
                     </div>
                     <div className="col-9">
-                        <input type="text" className="form-control w-100" placeholder={currentDrink.strInstructions} 
-                        onChange={(e) => setCurrentDrink({ ...currentDrink, strInstructions : e.target.value })}/>
+                        <input type="text" className="form-control w-100" placeholder={currentDrink?.strInstructions}
+                            onChange={(e) => setCurrentDrink({ ...currentDrink, strInstructions: e.target.value })} />
                     </div>
                 </div>
-                <br></br>
+                <div className="spacer-s"></div>
 
                 <div className="float-end">
                     <Link to={`/Cocktail/${id}`}>
                         <button className="golden-button-small-outline me-2">Cancel</button>
                     </Link>
-                    <button onClick={saveDrink} className="golden-button-small">Save</button>
+                    <button className="golden-button-small">Save</button>
                 </div>
             </div>
         </div>

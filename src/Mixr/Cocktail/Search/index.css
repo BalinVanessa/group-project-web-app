@@ -1,0 +1,67 @@
+.golden-button-small {
+    height: 40px;
+}
+
+.margin-left-15 {
+    margin-left: 15px;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.add-ingred-button {
+    height: auto;
+    width: 40px;
+    display: inline;
+    border-radius: .375rem;
+}
+
+.ingred-search {
+    display: inline !important;
+}
+
+.filter-pill-text, .delete-filter-btn {
+    color: var(--mxr-light-blue);
+    background-color: var(--mxr-light-gold);
+    padding: 5px 10px;
+}
+
+.filter-pill-form-spacing {
+    margin-bottom: 15px;
+}
+
+.filter-pill-main-spacing {
+    margin-top: 15px;
+}
+
+.filter-pill-text {
+    max-width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding-right: 5px;
+    margin-right: 0;
+}
+
+.delete-filter-btn {
+    border: none;
+    color: var(--mxr-light-blue);
+    padding-right: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-left: 0;
+    padding-right: 5px;
+    margin-right: 15px;
+}
+
+.filters-div div.justify-content-between {
+    justify-content: flex-start !important;
+}
+
+.filter-tags-div {
+    display: flex;
+    flex-wrap: wrap;
+}
