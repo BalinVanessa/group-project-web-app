@@ -1,5 +1,6 @@
-import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import { FaPlus } from "react-icons/fa6";
 import { FaTrashCan } from "react-icons/fa6";
@@ -14,14 +15,37 @@ function EditCocktail() {
     const [currentDrink, setCurrentDrink] = useState(null);
     const [inputtedIngredient, setInputtedIngredient] = useState('');
     const [ingredientAutofillValues, setIngredientAutofillValues] = useState([]);
+    const [currentIngredients, setCurrentIngredients] = useState();
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const fetchDrink = async () => {
         const drink = await ourDrinksClient.findDrinkById(id);
         setCurrentDrink(drink);
     };
 
-    const addIngredient = () => {
-        // add ingredient to currentDrink
+    const fetchIngredient = async (id) => {
+        const ingredient = await ingredientClient.findMixrIngredientById(id);
+        return ingredient;
+    }
+
+    const fetchCurrentIngredients = async () => {
+        if (currentDrink && currentDrink.ingredients) {
+            const ingredientPromises = currentDrink.ingredients.map((ingredient) => fetchIngredient(ingredient));
+            const currentIngredients = await Promise.all(ingredientPromises);
+            setCurrentIngredients(currentIngredients);
+        }
+    }
+
+    const addNewIngredient = ((newIngredient) => ({
+        ...currentDrink,
+        ingredients: [...currentDrink.ingredients, newIngredient],
+    }));
+
+    const updateDrink = async () => {
+        const newDrink = await ourDrinksClient.updateDrink(currentDrink);
+        navigate(`/Cocktail/${id}`);
     }
 
     const handleIngredientAutofill = async (partialName) => {
@@ -46,21 +70,10 @@ function EditCocktail() {
         setIngredientAutofillValues(mixrAutofillResponse);
     }
 
-    /*
-    const saveDrink = async () => {
-        for all ingredients in current drink:
-            if ingredient already exists:
-                get ingredient ID, add to ingredients array (to match mongo schema)
-            else
-                add ingredient to mongoDB, add ID to ingredients array
-        
-        await ourDrinksClient.updateDrink(currentDrink);
-    };
-    */
-
     useEffect(() => {
         fetchDrink();
-        // saveDrink();
+        fetchIngredient();
+        fetchCurrentIngredients();
     }, [id]);
 
     return (
@@ -128,9 +141,9 @@ function EditCocktail() {
                             <button className="golden-button-small ms-2"><FaPlus /></button>
                         </div>
                         <div>
-                            {currentDrink?.ingredients.map((ingredient) => (
+                            {currentIngredients?.map((ingredient) => (
                                 <div className="d-flex flex-row mt-2">
-                                    <div className="mxr-med-gold w-100">{ingredient}</div>
+                                    <div className="mxr-med-gold w-100">{ingredient.strIngredient}</div>
                                     <button className="red-button-small ms-2"><FaTrashCan /></button>
                                 </div>
                             ))}
@@ -173,13 +186,14 @@ function EditCocktail() {
                             onChange={(e) => setCurrentDrink({ ...currentDrink, strInstructions: e.target.value })} />
                     </div>
                 </div>
-                <div className="spacer-s"></div>
+                <div className="spacer-m"></div>
 
                 <div className="float-end">
                     <Link to={`/Cocktail/${id}`}>
-                        <button className="golden-button-small-outline me-2">Cancel</button>
+                        <button className="golden-button-med-outline me-2">Discard changes</button>
                     </Link>
-                    <button className="golden-button-small">Save</button>
+                    <button className="red-button-medium me-2">Delete recipe</button>
+                    <button className="golden-button-small">Update</button>
                 </div>
             </div>
         </div>
