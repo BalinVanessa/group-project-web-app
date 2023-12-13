@@ -52,12 +52,20 @@ export const findAllMixrIngredients = async () => {
 }
 
 export const findMixrIngredientById = async (ingredientId) => {
-    const response = await client.get(`${INGREDIENTS_API}/id`, ingredientId);
+    const response = await client.get(`${INGREDIENTS_API}/id`, {
+        params: {
+            id: ingredientId,
+        },
+    });
     return response.data;
 }
 
 export const findMixrIngredientByName = async (ingredientName) => {
-    const response = await client.get(`${INGREDIENTS_API}/name`, ingredientName);
+    const response = await client.get(`${INGREDIENTS_API}/name`, {
+        params: {
+            name: ingredientName,
+        },
+    });
     return response.data;
 }
 
