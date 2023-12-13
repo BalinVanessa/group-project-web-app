@@ -28,7 +28,7 @@ function Mixr() {
                         <Route path="/Home/:userID" element={<Home />} />
                         <Route path="/Search/:searchContent" element={<Search />} />
                         <Route path="/Profile/:userID" element={<Profile />} />
-                        <Route path="/EditProfile/:userID" element={<ProfileEditor />} />
+                        <Route path="/EditProfile" element={<ProfileEditor />} />
                         <Route path="/Cocktail/:id" element={<Cocktail />} />
                         <Route path="/EditCocktail/:id" element={<EditCocktail />} />
                         <Route path="/Review" element={<Review />} />

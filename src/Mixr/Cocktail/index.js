@@ -1,17 +1,41 @@
 import { FaStar } from "react-icons/fa6";
 import { RiPencilFill } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
-import db from "../Database";
+import { useEffect, useState } from "react";
+
 import { Link, useLocation, useParams } from "react-router-dom";
+import * as ourDrinksClient from "../Clients/ourDrinksClient";
+import * as userClient from "../Users/usersClient";
 
 function Cocktail() {
     const { id } = useParams(); //grabs drinkID
-    const drinks = db.drinks;
-    const currentDrink = drinks.find((drink) => drink.id == id)
+    const [currentDrink, setCurrentDrink] = useState(null);
+    //const [mixologistName, setMixologistName] = useState(null);
 
-    const { userID } = useParams(); //grabs user
-    const users = db.users;
-    const currentUser = userID && users.find((user) => user.userID == userID);
+    /*
+    const getUserWhoMadeDrink = async  (userID) => {
+        const user = await userClient.findUserById(userID);
+        return await user;
+    }
+    */
+
+    const fetchDrink = async () => {
+        const drink = await ourDrinksClient.findDrinkById(id);
+        setCurrentDrink(drink);
+    };
+
+    /*
+    const fetchMixologistName = async () => {
+        const mixologist = await getUserWhoMadeDrink(currentDrink?.mixologist).username;
+        setMixologistName(mixologist);
+    }
+    */
+
+
+    useEffect(() => {
+        fetchDrink();
+        //fetchMixologistName();
+    }, [id]);
 
     // generates the given amount of star icons
     function makeStars(num) {
@@ -27,36 +51,44 @@ function Cocktail() {
     return (
         <div className="p-5">
             <div className="mxr-light-blue-bg d-flex flex-row">
-                <img className="cocktail-image" src={currentDrink.image}></img>
+                <img className="cocktail-image" src="./Images/Negroni.jpg"></img>
                 <div className="ps-5">
                     <div className="d-flex flex-row">
-                        <h1 className="mxr-dark-gold">{currentDrink.name}</h1>
+                        <h1 className="mxr-dark-gold">{currentDrink?.strDrink}</h1>
                         <Link to={"#"}>
-                        <button className="golden-button-small ms-5"><FaRegHeart/></button>
+                            <button className="golden-button-small ms-5"><FaRegHeart /></button>
                         </Link>
-                        
+
                         <Link to={`/EditCocktail/${id}`}>
-                            <button className="golden-button-small ms-2"><RiPencilFill/></button>
+                            <button className="golden-button-small ms-2"><RiPencilFill /></button>
                         </Link>
                     </div>
                     <div className="mxr-light-gold">
-                        {makeStars(currentDrink.numStars)}
+                        {makeStars(4)}
                     </div>
+                    <div className="spacer-s"></div>
+                    <p className="mxr-light-gold">Made by: {currentDrink?.mixologist}</p>
+
                     <div className="spacer-m"></div>
-                    <h5 className="mxr-light-gold">{currentDrink.description}</h5>
-                    <div className="spacer-m"></div>
+
+                    <h5 className="mxr-dark-gold">Drink Type:</h5>
+                    <p className="mxr-light-gold">
+                        {currentDrink?.strAlcoholic}
+                    </p>
+                    <div className="spacer-s"></div>
+
                     <h5 className="mxr-dark-gold">Ingredients:</h5>
                     <p>
                         <ul className="mxr-light-gold">
-                            <li>1.5 oz Vodka</li>
-                            <li>1 tbsp Grenadine</li>
-                            <li>100 ml Sprite</li>
+                            {currentDrink?.measures.map((measurement, index) => (
+                                <li key={index}>{measurement} {currentDrink?.ingredients[index]}</li>
+                            ))}
                         </ul>
                     </p>
                     <div className="spacer-s"></div>
                     <h5 className="mxr-dark-gold">Directions:</h5>
                     <p className="mxr-light-gold">
-                        Mix the ingredients, shake, pour, enjoy.
+                        {currentDrink?.strInstructions}
                     </p>
                 </div>
             </div>
