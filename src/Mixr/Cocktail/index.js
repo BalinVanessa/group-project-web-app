@@ -78,13 +78,11 @@ function Cocktail() {
                     <div className="spacer-s"></div>
 
                     <h5 className="mxr-dark-gold">Ingredients:</h5>
-                    <p>
-                        <ul className="mxr-light-gold">
-                            {currentDrink?.measures.map((measurement, index) => (
-                                <li key={index}>{measurement} {currentDrink?.ingredients[index]}</li>
-                            ))}
-                        </ul>
-                    </p>
+                    <ul className="mxr-light-gold">
+                        {currentDrink?.measures.map((measurement, index) => (
+                            <li key={index}>{measurement} {currentDrink?.ingredients[index]}</li>
+                        ))}
+                    </ul>
                     <div className="spacer-s"></div>
                     <h5 className="mxr-dark-gold">Directions:</h5>
                     <p className="mxr-light-gold">

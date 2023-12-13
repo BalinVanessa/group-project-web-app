@@ -95,9 +95,9 @@ function FilterForm({ updateFilters, startingFilters }) {
         if (!mixrAutofillResponse || mixrAutofillResponse.length < 5) {
             try {
                 const externalAutofillResponse = await ingredientClient.findTop5ExternalIngredients(partialName);
-                externalAutofillResponse.slice(0, 5 - mixrAutofillResponse.length);
+                const slicedExternalResponse = externalAutofillResponse.slice(0, 5 - mixrAutofillResponse.length);
                 // combines responses of both APIs into one response
-                const combinedAutofillResponse = [...mixrAutofillResponse, ...externalAutofillResponse];
+                const combinedAutofillResponse = [...mixrAutofillResponse, ...slicedExternalResponse];
                 setIngredientAutofill(combinedAutofillResponse);
                 return;
             } catch (error) {
