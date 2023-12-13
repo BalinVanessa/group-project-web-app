@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 
 import { Link, useLocation, useParams } from "react-router-dom";
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
+import * as userClient from "../Users/usersClient";
 
 function Cocktail() {
     const { id } = useParams(); //grabs drinkID
     const [currentDrink, setCurrentDrink] = useState(null);
+    //const [mixologistName, setMixologistName] = useState(null);
 
     const getDrink = async (drinkID) => {
         const drink = await ourDrinksClient.findDrinkById(drinkID);
@@ -17,19 +19,32 @@ function Cocktail() {
         return await drink;
     }
 
+    /*
+    const getUserWhoMadeDrink = async  (userID) => {
+        const user = await userClient.findUserById(userID);
+        return await user;
+    }
+    */
+
     const fetchDrink = async () => {
-        const drink = await ourDrinksClient.findDrinkById(id);
+        const drink = await getDrink(id);
         setCurrentDrink(drink);
+        console.log(drink.strDrink);
+        console.log(drink.strAlcoholic);
     };
+
+    /*
+    const fetchMixologistName = async () => {
+        const mixologist = await getUserWhoMadeDrink(currentDrink?.mixologist).username;
+        setMixologistName(mixologist);
+    }
+    */
+
 
     useEffect(() => {
         fetchDrink();
-    }, []);
-
-
-    //const { userID } = useParams(); //grabs user
-    //const users = db.users;
-    //const currentUser = userID && users.find((user) => user.userID == userID);
+        //fetchMixologistName();
+    }, [id]);
 
     // generates the given amount of star icons
     function makeStars(num) {
@@ -48,7 +63,7 @@ function Cocktail() {
                 <img className="cocktail-image" src="./Images/Negroni.jpg"></img>
                 <div className="ps-5">
                     <div className="d-flex flex-row">
-                        <h1 className="mxr-dark-gold">{currentDrink.strDrink}</h1>
+                        <h1 className="mxr-dark-gold">{currentDrink?.strDrink}</h1>
                         <Link to={"#"}>
                             <button className="golden-button-small ms-5"><FaRegHeart /></button>
                         </Link>
@@ -60,21 +75,29 @@ function Cocktail() {
                     <div className="mxr-light-gold">
                         {makeStars(4)}
                     </div>
+                    <div className="spacer-s"></div>
+                    <p className="mxr-light-gold">Made by: {currentDrink?.mixologist}</p>
 
                     <div className="spacer-m"></div>
+
+                    <h5 className="mxr-dark-gold">Drink Type:</h5>
+                    <p className="mxr-light-gold">
+                        {currentDrink?.strAlcoholic}
+                    </p>
+                    <div className="spacer-s"></div>
 
                     <h5 className="mxr-dark-gold">Ingredients:</h5>
                     <p>
                         <ul className="mxr-light-gold">
-                            <li>1.5 oz Vodka</li>
-                            <li>1 tbsp Grenadine</li>
-                            <li>100 ml Sprite</li>
+                            {currentDrink?.measures.map((measurement, index) => (
+                                <li key={index}>{measurement} {currentDrink?.ingredients[index]}</li>
+                            ))}
                         </ul>
                     </p>
                     <div className="spacer-s"></div>
                     <h5 className="mxr-dark-gold">Directions:</h5>
                     <p className="mxr-light-gold">
-                        Mix the ingredients, shake, pour, enjoy.
+                        {currentDrink?.strInstructions}
                     </p>
                 </div>
             </div>
