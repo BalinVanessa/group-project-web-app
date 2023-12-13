@@ -65,3 +65,13 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.search-results-div {
+    margin-top: 15px;
+}
+
+.drinkCard {
+    margin-bottom: 32px;
+    width: auto;
+    margin-right: 15px;
+}

@@ -10,7 +10,7 @@ function SearchBar({ existingSearchContent = "" }) {
 
     return (
         <ResponsiveCenterDiv>
-            <input type="text" className="form-control d-inline w-95 margin-left-15" placeholder="Search for recipes..."
+            <input type="text" className="form-control d-inline" placeholder="Search for recipes..."
                 onChange={(event) => setSearchContent(event.target.value)} value={searchContent} />
             <Link to={`/Search/${searchContent}`}>
                 <FaMagnifyingGlass className="mxr-med-gold icon-size-lg search-icon" />

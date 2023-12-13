@@ -26,6 +26,11 @@ export const findDrinkById = async (idDrink) => {
     return response.data;
 }
 
+export const findDrinkByName = async (drinkName) => {
+    const response = await client.get(`${DRINKS_API}/name/${drinkName}`);
+    return response.data;
+}
+
 export const updateDrink = async (drink) => {
     const response = await client.put(`${DRINKS_API}/${drink.idDrink}`, drink);
     return response.data;

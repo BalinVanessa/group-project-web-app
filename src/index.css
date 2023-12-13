@@ -282,6 +282,11 @@ hr.smaller {
 
 .drinkCard-text>p {
   padding-top: 16px;
+  max-height: 5.5em;
+  max-width: 350px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
 }
 
 /* REVIEW STYLING */
