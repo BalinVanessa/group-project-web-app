@@ -4,7 +4,7 @@ import * as favoritesClient from "../../Clients/favoritesClient";
 import * as ourDrinksClient from "../../Clients/ourDrinksClient";
 import { useEffect, useState } from "react";
 
-function DrinkerProfile({ currentUser }) {
+function DrinkerProfile({ profile }) {
     const [following, setFollowing] = useState([]);
     const [followers, setFollowers] = useState([]);
     const [favorites, setFavorites] = useState([]);
@@ -17,10 +17,10 @@ function DrinkerProfile({ currentUser }) {
     }
 
     // the user's fav drinks, obtained from their ids
-    // const favDrinks = currentUser.favoriteDrinks.map((id) => getDrink(id));
+    // const favDrinks = profile.favoriteDrinks.map((id) => getDrink(id));
     const fetchUserFavorites = async () => {
-        // get all favorite objects involving the current user
-        const favs = await favoritesClient.findDrinksThatUserFav(currentUser._id);
+        // get all favorite objects involving the profile user
+        const favs = await favoritesClient.findDrinksThatUserFav(profile._id);
         // get the drinks
         const userFavDrinks = await Promise.all(favs.map((favorite) => getDrink(favorite.idDrink)));
         console.log(userFavDrinks);
@@ -41,14 +41,14 @@ function DrinkerProfile({ currentUser }) {
 
     // the user's followers 
     const fetchFollowers = async () => {
-        const follows = await followsClient.findFollowersOfUser(currentUser._id);
+        const follows = await followsClient.findFollowersOfUser(profile._id);
         const followers = follows.map((follow) => follow.follower);
         setFollowers(followers);
     }
 
     // who the user is following
     const fetchFollowing = async () => {
-        const follows = await followsClient.findFollowedUsersByUser(currentUser._id);
+        const follows = await followsClient.findFollowedUsersByUser(profile._id);
         const following = follows.map((follow) => follow.followed);
         setFollowing(following);
     }
@@ -57,7 +57,7 @@ function DrinkerProfile({ currentUser }) {
         fetchFollowers();
         fetchFollowing();
         fetchUserFavorites();
-    }, []);
+    }, [profile]);
 
     return (
         <div>
