@@ -2,18 +2,15 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import db from "../Database"
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
 
 
 function EditCocktail() {
-    const { idDrink } = useParams(); //grabs drinkID
-    //const drinks = db.drinks;
-
+    const { id } = useParams(); //grabs drinkID
     const [currentDrink, setCurrentDrink] = useState(null);
-    const navigate = useNavigate();
+    
     const fetchDrink = async () => {
-        const drink = await ourDrinksClient.findDrinkById(idDrink);
+        const drink = await ourDrinksClient.findDrinkById(id);
         setCurrentDrink(drink);
     };
     const saveDrink = async () => {
@@ -92,7 +89,7 @@ function EditCocktail() {
                 <br></br>
 
                 <div className="float-end">
-                    <Link to={`/Cocktail/${idDrink}`}>
+                    <Link to={`/Cocktail/${id}`}>
                         <button className="golden-button-small-outline me-2">Cancel</button>
                     </Link>
                     <button onClick={saveDrink} className="golden-button-small">Save</button>
