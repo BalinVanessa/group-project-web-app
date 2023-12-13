@@ -32,20 +32,40 @@ export const findTop5ExternalIngredients = async (partialIngredientName) => {
     return top5Ingredients;
 }
 
+export const findExternalIngredientById = async (ingredientId) => {
+    const response = await externalClient.get(`${EXTERNAL_BASE_API}lookup.php?iid=${ingredientId}`);
+
+    const ingredient = response.data.ingredients[0];
+    return ingredient;
+}
+
+export const findExternalIngredientByName = async (ingredient) => {
+    const response = await externalClient.get(`${EXTERNAL_BASE_API}search.php?i=${ingredient}`);
+
+    const ingredientResponse = response.data.ingredients[0];
+    return ingredientResponse;
+}
+
 export const findAllMixrIngredients = async () => {
     const response = await client.get(`${INGREDIENTS_API}`);
     return response.data;
 }
 
-// potentially unnecessary
 export const findMixrIngredientById = async (ingredientId) => {
-    const response = await client.get(`${INGREDIENTS_API}/id`, ingredientId);
+    const response = await client.get(`${INGREDIENTS_API}/id`, {
+        params: {
+            id: ingredientId,
+        },
+    });
     return response.data;
 }
 
-// potentially unnecessary
 export const findMixrIngredientByName = async (ingredientName) => {
-    const response = await client.get(`${INGREDIENTS_API}/name`, ingredientName);
+    const response = await client.get(`${INGREDIENTS_API}/name`, {
+        params: {
+            name: ingredientName,
+        },
+    });
     return response.data;
 }
 

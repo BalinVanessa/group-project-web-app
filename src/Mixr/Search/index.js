@@ -20,7 +20,7 @@ function Search() {
         setCurrentFilters(filters !== undefined ? filters : currentFilters);
     };
 
-    const setSessionFilters = async(filters) => {
+    const setSessionFilters = async (filters) => {
         try {
             await filterClient.setFilters(filters);
         } catch (error) {
@@ -57,7 +57,7 @@ function Search() {
             <div style={{ paddingTop: "50px" }} />
             <SearchBar existingSearchContent={searchContent} />
             <ResponsiveCenterDiv className="filters-div align-content-top">
-                <div className="dropdown margin-left-15" style={{ marginTop: "15px", marginRight: "15px", marginBottom:"auto" }}>
+                <div className="dropdown margin-left-15" style={{ marginTop: "15px", marginRight: "15px", marginBottom: "auto" }}>
                     <button className="golden-button-small dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Filter
                     </button>
@@ -66,7 +66,7 @@ function Search() {
                 <div className="d-flex flex-row flex-wrap align-content-center">
                     {currentFilters.alcoholic !== null && <IngredientFilterTag ingredient={currentFilters.alcoholic} isInForm={false} deleteIngredient={handleDeleteAlcoholicFilter} />}
                     {currentFilters && currentFilters.ingredients.map((i) => (
-                        <IngredientFilterTag ingredient={i} isInForm={false} deleteIngredient={handleDeleteIngredientFilter}/>
+                        <IngredientFilterTag ingredient={i} isInForm={false} deleteIngredient={handleDeleteIngredientFilter} />
                     ))}
                 </div>
             </ResponsiveCenterDiv>
