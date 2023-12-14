@@ -11,8 +11,7 @@ import './index.css';
 
 
 function AddCocktail() {
-    const { id } = useParams(); //grabs drinkID
-    const [currentDrink, setCurrentDrink] = useState(null);
+    const { userID } = useParams();
     const [inputtedIngredient, setInputtedIngredient] = useState('');
     const [ingredientAutofillValues, setIngredientAutofillValues] = useState([]);
     const [currentIngredients, setCurrentIngredients] = useState();
@@ -20,11 +19,28 @@ function AddCocktail() {
 
     const navigate = useNavigate();
 
-    //gets a drink by its ID
-    const fetchDrink = async () => {
-        const drink = await ourDrinksClient.findDrinkById(id);
-        setCurrentDrink(drink);
-        fetchCurrentIngredients(drink);
+    const [newDrink, setNewDrink] =
+        useState({
+            idDrink: new Date().valueOf(),
+            strDrink: "",
+            strAlcoholic: "",
+            strInstructions: "",
+            ingredients: [],
+            measures: [],
+            dateModified: new Date(),
+            mixologist: userID
+        });
+
+    const [error, setError] = useState(null);
+
+    const makeDrink = async () => {
+        try {
+            console.log(newDrink);
+            const drink = await ourDrinksClient.createDrink(newDrink);
+            navigate(`/Cocktail/${newDrink.idDrink}`)
+        } catch (error) {
+            setError(error);
+        }
     };
 
     //gets an ingredient by its ID
@@ -51,61 +67,42 @@ function AddCocktail() {
         }
     };
 
-    //updates the drink and navigates back to the cocktail page
-    const updateDrink = async () => {
-        const drink = await ourDrinksClient.updateDrink(currentDrink);
-        navigate(`/Cocktail/${id}`);
-    }
-
-    //delete drink and navigate back to the home page
-    const deleteDrink = async () => {
-        const drink = await ourDrinksClient.deleteDrink(currentDrink);
-        navigate('/Home')
-    }
-
     //adds a new ingredient to the current list of ingredients for a drink
     const addIngredient = async (newIngredientName) => {
         const newIngredient = await (ingredientClient.findExternalIngredientByName(newIngredientName) || ingredientClient.findMixrIngredientByName(newIngredientName));
         console.log(newIngredient);
-        const updatedDrink = {
-            ...currentDrink,
-            ingredients: [...currentDrink?.ingredients, newIngredient.idIngredient]
-        };
-        console.log(updatedDrink);
-        const drink = await ourDrinksClient.updateDrink(updatedDrink);
-        console.log(drink);
-        fetchCurrentIngredients(drink);
+        setNewDrink({
+            ...newDrink,
+            ingredients: [...newDrink?.ingredients, newIngredient.idIngredient]
+        });
+        fetchCurrentIngredients(newDrink);
     }
 
     //adds a new measurement to the current list of measurements for a drink
     const addMeasurement = async (newMeasurement) => {
-        const updatedDrink = {
-            ...currentDrink,
-            measures: [...currentDrink?.measures, newMeasurement]
-        };
-        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+        setNewDrink({
+            ...newDrink,
+            measures: [...newDrink?.measures, newMeasurement]
+        });
     }
 
     //deletes an ingredient from the current list of ingredients for a drink
     const deleteIngredient = async (ingredient) => {
-        const updatedDrink = {
-            ...currentDrink,
-            ingredients: [...currentDrink.ingredients.filter((item) => item !== ingredient.idIngredient)]
-        };
-        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+        setNewDrink({
+            ...newDrink,
+            ingredients: [...newDrink.ingredients.filter((item) => item !== ingredient.idIngredient)]
+        });
     };
 
     //delete a new measurement from the current list of measurements for a drink
     const deleteMeasurement = async (indexRemoved) => {
         console.log(indexRemoved);
-        console.log(currentDrink.measures);
-    
-        const updatedDrink = {
-            ...currentDrink,
-            measures: [...currentDrink.measures.filter((item, index) => ((index) !== indexRemoved))]
-        }
-        console.log(updatedDrink);
-        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+        console.log(newDrink.measures);
+
+        setNewDrink({
+            ...newDrink,
+            measures: [...newDrink.measures.filter((item, index) => ((index) !== indexRemoved))]
+        })
     }
 
     //autofills the ingredient
@@ -132,8 +129,8 @@ function AddCocktail() {
     }
 
     useEffect(() => {
-        fetchDrink();
-    }, [currentIngredients]);
+        fetchCurrentIngredients(newDrink);
+    }, [newDrink]);
 
     return (
         <div>
@@ -148,7 +145,7 @@ function AddCocktail() {
                     </div>
                     <div className="col-9">
                         <input type="text" className="form-control w-100" placeholder="Add a name"
-                            onChange={(e) => setCurrentDrink({ ...currentDrink, strDrink: e.target.value })} />
+                            onChange={(e) => setNewDrink({ ...newDrink, strDrink: e.target.value })} />
                     </div>
                 </div>
                 <div className="spacer-s"></div>
@@ -158,12 +155,12 @@ function AddCocktail() {
                         <h4 className="mxr-med-gold">Drink Type</h4>
                     </div>
                     <div className="col-9">
-                        <input type="radio" id="alcoholic" name="drinkType"
-                            onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })} />
+                        <input type="radio" id="alcoholic" name="drinkType" value="Alcoholic"
+                            onChange={(e) => setNewDrink({ ...newDrink, strAlcoholic: e.target.value })} />
                         <label className="mxr-light-gold ms-2" for="alcoholic">Alcoholic</label>
                         <div className="spacer-xs"></div>
-                        <input type="radio" id="non-alcoholic" name="drinkType"
-                            onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })} />
+                        <input type="radio" id="non-alcoholic" name="drinkType" value="Non alcoholic"
+                            onChange={(e) => setNewDrink({ ...newDrink, strAlcoholic: e.target.value })} />
                         <label className="mxr-light-gold ms-2" for="non-alcoholic">Non-Alcoholic</label>
                     </div>
                 </div>
@@ -220,14 +217,14 @@ function AddCocktail() {
                     </div>
                     <div className="col-9">
                         <div className="d-flex flex-row">
-                            <input type="text" 
-                            className="form-control w-100" 
-                            id="measurement"
-                            onChange={(e) => setInputtedMeasure(e.target.value)}/>
+                            <input type="text"
+                                className="form-control w-100"
+                                id="measurement"
+                                onChange={(e) => setInputtedMeasure(e.target.value)} />
                             <button onClick={() => addMeasurement(inputtedMeasure)} className="golden-button-small ms-2"><FaPlus /></button>
                         </div>
                         <div>
-                            {currentDrink?.measures.map((measure, index) => (
+                            {newDrink?.measures.map((measure, index) => (
                                 <div className="d-flex flex-row mt-2">
                                     <div className="mxr-med-gold w-100">{measure}</div>
                                     <button onClick={() => deleteMeasurement(index)} className="red-button-small ms-2"><FaTrashCan /></button>
@@ -246,16 +243,16 @@ function AddCocktail() {
                     </div>
                     <div className="col-9">
                         <input type="text" className="form-control w-100" placeholder="Add your instructions"
-                            onChange={(e) => setCurrentDrink({ ...currentDrink, strInstructions: e.target.value })} />
+                            onChange={(e) => setNewDrink({ ...newDrink, strInstructions: e.target.value })} />
                     </div>
                 </div>
                 <div className="spacer-m"></div>
 
                 <div className="float-end">
                     <Link to={`#`}>
-                        <button className="golden-button-med-outline me-2">Cancel</button>
+                        <button className="golden-button-small-outline me-2">Cancel</button>
                     </Link>
-                    <button onClick={updateDrink} className="golden-button-small">Save</button>
+                    <button onClick={makeDrink} className="golden-button-small">Save</button>
                 </div>
             </div>
         </div>
