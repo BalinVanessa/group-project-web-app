@@ -133,7 +133,7 @@ function EditCocktail() {
 
     useEffect(() => {
         fetchDrink();
-    }, []);
+    }, [currentIngredients]);
 
     return (
         <div>
