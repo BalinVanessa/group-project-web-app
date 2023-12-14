@@ -20,34 +20,41 @@ function EditCocktail() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    //gets a drink by its ID
     const fetchDrink = async () => {
         const drink = await ourDrinksClient.findDrinkById(id);
         setCurrentDrink(drink);
+        fetchCurrentIngredients(drink);
     };
 
+    //gets an ingredient by its ID
     const fetchIngredient = async (id) => {
         const ingredient = await ingredientClient.findMixrIngredientById(id);
         return ingredient;
     }
 
-    const fetchCurrentIngredients = async () => {
-        if (currentDrink && currentDrink.ingredients) {
-            const ingredientPromises = currentDrink.ingredients.map((ingredient) => fetchIngredient(ingredient));
+    //gets a list of the current ingredients in the drink
+    const fetchCurrentIngredients = async (drink) => {
+        if (drink && drink.ingredients) {
+            const ingredientPromises = drink.ingredients.map((ingredient) => fetchIngredient(ingredient));
             const currentIngredients = await Promise.all(ingredientPromises);
             setCurrentIngredients(currentIngredients);
         }
     };
 
+    //updates the drink and navigates back to the cocktail page
     const updateDrink = async () => {
         const drink = await ourDrinksClient.updateDrink(currentDrink);
         navigate(`/Cocktail/${id}`);
     }
 
+    //delete drink and navigate back to the home page
     const deleteDrink = async () => {
         const drink = await ourDrinksClient.deleteDrink(currentDrink);
         navigate('/Home')
     }
 
+    //autofills the ingredient
     const handleIngredientAutofill = async (partialName) => {
         // queries mongoDB for matching ingredients
         const mixrAutofillResponse = await ingredientClient.findTop5MixrIngredients(partialName);
@@ -72,9 +79,7 @@ function EditCocktail() {
 
     useEffect(() => {
         fetchDrink();
-        fetchIngredient();
-        fetchCurrentIngredients();
-    }, [id]);
+    }, []);
 
     return (
         <div>
