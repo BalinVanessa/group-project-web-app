@@ -249,7 +249,7 @@ function AddCocktail() {
                 <div className="spacer-m"></div>
 
                 <div className="float-end">
-                    <Link to={`#`}>
+                    <Link to={`/Profile/${userID}`}>
                         <button className="golden-button-small-outline me-2">Cancel</button>
                     </Link>
                     <button onClick={makeDrink} className="golden-button-small">Save</button>
