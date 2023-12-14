@@ -307,7 +307,7 @@ hr.smaller {
 /* COCKTAIL PAGE STYLING */
 .cocktail-image {
   width: 400px;
-  height: 650px;
+  height: 550px;
   border-radius: 24px;
   z-index: 1;
   object-fit: cover;
@@ -316,4 +316,11 @@ hr.smaller {
 .signup-fields {
   width: 250px;
   height: 30px;
+}
+
+@media screen and (max-width:1300px) {
+  .cocktail-image {
+    width:70%;
+    height: 400px;
+  }
 }
