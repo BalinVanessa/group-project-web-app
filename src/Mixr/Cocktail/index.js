@@ -172,9 +172,9 @@ function Cocktail() {
                         )
                         }
 
-                        {currentUser?._id === mixologist?._id && <Link to={`/EditCocktail/${id}`}>
+                        {mixologist && (currentUser?._id === mixologist?._id && <Link to={`/EditCocktail/${id}`}>
                             <button className="golden-button-small ms-2"><RiPencilFill /></button>
-                        </Link>}
+                        </Link>)}
                     </div>
                     <div className="mxr-light-gold">
                         {makeStars(4)}
