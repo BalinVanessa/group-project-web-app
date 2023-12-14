@@ -50,8 +50,8 @@ function Cocktail() {
 
     return (
         <div className="p-5">
-            <div className="mxr-light-blue-bg d-flex flex-row">
-                <img className="cocktail-image" src="./Images/Negroni.jpg"></img>
+            <div className="mxr-light-blue-bg d-flex flex-row flex-wrap justify-content-center">
+                <img className="cocktail-image mb-5" src="./Images/Negroni.jpg"></img>
                 <div className="ps-5">
                     <div className="d-flex flex-row">
                         <h1 className="mxr-dark-gold">{currentDrink?.strDrink}</h1>
