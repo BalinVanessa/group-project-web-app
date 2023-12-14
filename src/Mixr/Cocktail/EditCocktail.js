@@ -16,9 +16,9 @@ function EditCocktail() {
     const [inputtedIngredient, setInputtedIngredient] = useState('');
     const [ingredientAutofillValues, setIngredientAutofillValues] = useState([]);
     const [currentIngredients, setCurrentIngredients] = useState();
+    const [inputtedMeasure, setInputtedMeasure] = useState();
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     //gets a drink by its ID
     const fetchDrink = async () => {
@@ -29,8 +29,16 @@ function EditCocktail() {
 
     //gets an ingredient by its ID
     const fetchIngredient = async (id) => {
-        const ingredient = await ingredientClient.findMixrIngredientById(id);
-        return ingredient;
+        console.log(id);
+
+        const mixrIngredient = await ingredientClient.findMixrIngredientById(id);
+        if (!mixrIngredient) {
+            const externalIngredient = await ingredientClient.findExternalIngredientById(id);
+            console.log(externalIngredient)
+            return externalIngredient;
+        } else {
+            return mixrIngredient;
+        }
     }
 
     //gets a list of the current ingredients in the drink
@@ -39,6 +47,7 @@ function EditCocktail() {
             const ingredientPromises = drink.ingredients.map((ingredient) => fetchIngredient(ingredient));
             const currentIngredients = await Promise.all(ingredientPromises);
             setCurrentIngredients(currentIngredients);
+            console.log(currentIngredients);
         }
     };
 
@@ -52,6 +61,36 @@ function EditCocktail() {
     const deleteDrink = async () => {
         const drink = await ourDrinksClient.deleteDrink(currentDrink);
         navigate('/Home')
+    }
+
+    //adds a new ingredient to the current list of ingredients for a drink
+    const addIngredient = async (newIngredientName) => {
+        const newIngredient = await (ingredientClient.findExternalIngredientByName(newIngredientName) || ingredientClient.findMixrIngredientByName(newIngredientName));
+        console.log(newIngredient);
+        const updatedDrink = {
+            ...currentDrink,
+            ingredients: [...currentDrink?.ingredients, newIngredient.idIngredient]
+        };
+        console.log(updatedDrink);
+        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+        console.log(drink);
+    }
+
+    //adds a new measurement to the current list of measurements for a drink
+    const addMeasurement = async (newMeasurement) => {
+        const updatedDrink = {
+            ...currentDrink,
+            measures: [...currentDrink?.measures, newMeasurement]
+        };
+        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+    }
+
+    const deleteIngredient = async (ingredient) => {
+        const updatedDrink = {
+            ...currentDrink,
+            ingredients: [...currentDrink?.ingredients.filter((item) => ((item.strIngredient !== ingredient)))]
+        }
+        const drink = await ourDrinksClient.updateDrink(updatedDrink);
     }
 
     //autofills the ingredient
@@ -117,7 +156,7 @@ function EditCocktail() {
 
                 <div className="row">
                     <div className="col-3">
-                        <h4 className="mxr-med-gold">Ingredients:</h4>
+                        <h4 className="mxr-med-gold labels">Ingredients:</h4>
                     </div>
                     <div className="col-9">
                         <div className="d-flex flex-row">
@@ -143,13 +182,14 @@ function EditCocktail() {
                                     )}
                                 </ul>}
                             </div>
-                            <button onClick={""} className="golden-button-small ms-2"><FaPlus /></button>
+                            <button onClick={() => addIngredient(inputtedIngredient)} className="golden-button-small ms-2"><FaPlus /></button>
                         </div>
                         <div>
+                            {console.log(currentIngredients)}
                             {currentIngredients?.map((ingredient) => (
                                 <div key={ingredient?.idDrink} className="d-flex flex-row mt-2">
                                     <div className="mxr-med-gold w-100">{ingredient?.strIngredient}</div>
-                                    <button className="red-button-small ms-2"><FaTrashCan /></button>
+                                    <button onClick={() => deleteIngredient(ingredient)} className="red-button-small ms-2"><FaTrashCan /></button>
                                 </div>
                             ))}
                         </div>
@@ -161,11 +201,11 @@ function EditCocktail() {
 
                 <div className="row">
                     <div className="col-3">
-                        <h4 className="mxr-med-gold">Measurements:</h4>
+                        <h4 className="mxr-med-gold labels">Measurements:</h4>
                     </div>
                     <div className="col-9">
                         <div className="d-flex flex-row">
-                            <input type="text" className="form-control w-100" />
+                            <input type="text" className="form-control w-100" id="measurement"/>
                             <button className="golden-button-small ms-2"><FaPlus /></button>
                         </div>
                         <div>
@@ -184,10 +224,10 @@ function EditCocktail() {
 
                 <div className="row">
                     <div className="col-3">
-                        <h4 className="mxr-med-gold">Directions:</h4>
+                        <h4 className="mxr-med-gold labels">Directions:</h4>
                     </div>
                     <div className="col-9">
-                        <input type="text" className="form-control w-100" placeholder={currentDrink?.strInstructions}
+                        <input type="text" className="form-control w-100" value={currentDrink?.strInstructions}
                             onChange={(e) => setCurrentDrink({ ...currentDrink, strInstructions: e.target.value })} />
                     </div>
                 </div>
