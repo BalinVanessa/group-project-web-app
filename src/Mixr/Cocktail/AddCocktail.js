@@ -10,7 +10,7 @@ import * as ingredientClient from "../Clients/ingredientsClient";
 import './index.css';
 
 
-function EditCocktail() {
+function AddCocktail() {
     const { id } = useParams(); //grabs drinkID
     const [currentDrink, setCurrentDrink] = useState(null);
     const [inputtedIngredient, setInputtedIngredient] = useState('');
@@ -138,7 +138,7 @@ function EditCocktail() {
     return (
         <div>
             <div className="mxr-container mt-5">
-                <h1 className="mxr-med-gold">Edit Recipe</h1>
+                <h1 className="mxr-med-gold labels">Add Recipe</h1>
             </div>
 
             <div className="mxr-container-smaller mt-5">
@@ -147,7 +147,7 @@ function EditCocktail() {
                         <h4 className="mxr-med-gold labels">Cocktail Name:</h4>
                     </div>
                     <div className="col-9">
-                        <input type="text" className="form-control w-100" value={currentDrink?.strDrink}
+                        <input type="text" className="form-control w-100" placeholder="Add a name"
                             onChange={(e) => setCurrentDrink({ ...currentDrink, strDrink: e.target.value })} />
                     </div>
                 </div>
@@ -155,7 +155,7 @@ function EditCocktail() {
 
                 <div className="row">
                     <div className="col-3">
-                        <h4 className="mxr-med-gold labels">Drink Type</h4>
+                        <h4 className="mxr-med-gold">Drink Type</h4>
                     </div>
                     <div className="col-9">
                         <input type="radio" id="alcoholic" name="drinkType"
@@ -245,22 +245,21 @@ function EditCocktail() {
                         <h4 className="mxr-med-gold labels">Directions:</h4>
                     </div>
                     <div className="col-9">
-                        <input type="text" className="form-control w-100" value={currentDrink?.strInstructions}
+                        <input type="text" className="form-control w-100" placeholder="Add your instructions"
                             onChange={(e) => setCurrentDrink({ ...currentDrink, strInstructions: e.target.value })} />
                     </div>
                 </div>
                 <div className="spacer-m"></div>
 
                 <div className="float-end">
-                    <Link to={`/Cocktail/${id}`}>
-                        <button className="golden-button-med-outline me-2">Discard changes</button>
+                    <Link to={`#`}>
+                        <button className="golden-button-med-outline me-2">Cancel</button>
                     </Link>
-                    <button onClick={deleteDrink} className="red-button-medium me-2">Delete recipe</button>
-                    <button onClick={updateDrink} className="golden-button-small">Update</button>
+                    <button onClick={updateDrink} className="golden-button-small">Save</button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default EditCocktail;
+export default AddCocktail;
