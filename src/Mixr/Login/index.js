@@ -61,7 +61,7 @@ function Login() {
 
                     <div className="spacer-xl"></div>
 
-                    <Link to={`/SignUp`}>
+                    <Link to={`/Register`}>
                         <button className="golden-button-large-outline">Create an account instead</button>
                     </Link>
                     <div className="spacer-xxl"></div>

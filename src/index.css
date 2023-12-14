@@ -236,8 +236,8 @@ hr.smaller {
   height: 160px;
 }
 
-.padding-top-80 {
-  padding-top: 80px;
+.padding-top-50 {
+  padding-top: 50px;
 }
 
 .w-95 {
@@ -300,7 +300,8 @@ hr.smaller {
 }
 
 .review-img {
-  width: 128px;
+  width: 60px;
+  border-radius:50%;
 }
 
 /* COCKTAIL PAGE STYLING */

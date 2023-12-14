@@ -12,3 +12,9 @@ export const findExternalDrinksByName = async(cocktailName) => {
 
     return response.data.drinks;
 }
+
+export const findExternalDrinksByID = async (drinkId) => {
+    const response = await externalClient.get(`${EXTERNAL_BASE_API}lookup.php?i=${drinkId}`);
+
+    return response.data.drinks[0];
+}
