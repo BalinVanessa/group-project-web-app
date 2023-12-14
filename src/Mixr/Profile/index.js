@@ -92,7 +92,7 @@ function Profile() {
 
                         {currentUser && currentUser._id !== userID &&
                             (isFollowing ? <button onClick={unfollowProfile} className="golden-button-medium mt-3">Unfollow</button> :
-                            <button onClick={followProfile} className="golden-button-med-outline mt-3">Follow</button>)
+                                <button onClick={followProfile} className="golden-button-med-outline mt-3">Follow</button>)
                         }
                     </div>
                 </div>)}
@@ -102,7 +102,8 @@ function Profile() {
                 <hr />
                 <hr className="smaller" />
             </div>
-            {profile && profile.role === "DRINKER" ? <DrinkerProfile profile={profile} /> : <MixologistProfile profile={profile} />}
+            {profile && profile.role === "DRINKER" && (<DrinkerProfile profile={profile} />)}
+            {profile && profile.role === "MIXOLOGIST" && (<MixologistProfile profile={profile} />)}
         </div>
     )
 }

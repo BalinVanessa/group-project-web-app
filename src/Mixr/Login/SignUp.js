@@ -126,7 +126,7 @@ function SignUp() {
                                 id="drinkerRadio"
                                 value="DRINKER"
                                 onChange={(e) => setAccount({ ...account, role: e.target.value })}
-                                checked />
+                                />
                             <label
                                 for="drinkerRadio"
                                 className="mxr-med-gold me-4">Drinker</label>
