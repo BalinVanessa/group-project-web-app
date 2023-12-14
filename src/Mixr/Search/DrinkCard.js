@@ -14,7 +14,7 @@ function DrinkCard({ drink }) {
     return (
         <div className="drinkCard mxr-med-blue-bg">
             <div className="align-top">
-                <img className="drinkCard-img" src={drink.strDrinkThumb || "./Images/EspressoMartini.jpg"} />
+                <img className="drinkCard-img" src={drink.strDrinkThumb || "./Images/thegoat.jpg"} />
             </div>
             <div className="drinkCard-text">
                 <h4>{drink.strDrink}</h4>

@@ -19,7 +19,15 @@ function FilterForm({ updateFilters, startingFilters }) {
 
     // updates state of alcoholic radios (if same radio is clicked, sets to null (neither selected), otherwise sets to the one that was selected)
     const handleAlcoholicChange = (selection) => {
-        setAlcoholicSelection((previousValue) => (previousValue === selection ? null : selection));
+        const newSelection = alcoholicSelection === selection ? null : selection;
+        setAlcoholicSelection(newSelection);
+
+        const newFilters = {
+            ...currentFilters,
+            alcoholic: newSelection
+        }
+
+        setCurrentFilters(newFilters);
     }
 
     // removes ingredient from local useState
@@ -72,18 +80,11 @@ function FilterForm({ updateFilters, startingFilters }) {
 
     // called when "Apply" button is clicked
     const handleUpdateFilters = async (event) => {
-        try {
-            // updates filters in session
-            await filterClient.setFilters({
-                alcoholic: alcoholicSelection,
-                ingredients: currentFilters.ingredients
-            });
-            // calls function passed in from parent
-            //  - function in parent element fetches updated filters from session and updates parent useState
-            updateFilters();
-        } catch (error) {
-            console.error(`Error setting session filters: ${error}`)
-        }
+        // updates filters in session
+        await filterClient.setFilters(currentFilters);
+        // calls function passed in from parent
+        //  - function in parent element fetches updated filters from session and updates parent useState
+        updateFilters();
     }
 
     // calls client to autofill based on text input
@@ -127,7 +128,7 @@ function FilterForm({ updateFilters, startingFilters }) {
                             id="alcoholic-check"
                             checked={alcoholicSelection === 'Alcoholic'} // checked when radio selection matches
                             onClick={() => handleAlcoholicChange('Alcoholic')} // includes onClick handler so user can deselect radio
-                        /> 
+                        />
                         <label className="form-check-label" htmlFor="alcoholic-check">
                             Alcoholic
                         </label>
@@ -165,9 +166,9 @@ function FilterForm({ updateFilters, startingFilters }) {
                     {<ul className="dropdown-menu">
                         {ingredientAutofill.map((ingredient) => {
                             return (
-                            <li>
-                                <a className="dropdown-item" onClick={(e) => setCurrentIngredient(ingredient)}>{ingredient}</a>
-                            </li>)
+                                <li>
+                                    <a className="dropdown-item" onClick={(e) => setCurrentIngredient(ingredient)}>{ingredient}</a>
+                                </li>)
                         })}
                     </ul>}
                 </div>
