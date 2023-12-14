@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import * as filterClient from './../Clients/filtersClient'
 import * as externalDrinksClient from './../Clients/externalDrinksClient';
 import * as ourDrinksClient from './../Clients/ourDrinksClient';
-import DrinkCard from "./DrinkCard";
+import DrinkCard from "../DrinkCard/DrinkCard";
 
 function Search() {
 
@@ -19,6 +19,12 @@ function Search() {
         ingredients: []
     });
     const [searchResults, setSearchResults] = useState([]);
+    const [filterRefresh, setFilterRefresh] = useState(null);
+
+    const updateFilters = async () => {
+        await fetchCurrentFilters();
+        await searchForCocktails();
+    }
 
     const fetchCurrentFilters = async () => {
         const filters = await filterClient.getCurrentFilters();
@@ -41,9 +47,10 @@ function Search() {
 
         setCurrentFilters(newFilters);
         setSessionFilters(newFilters);
+        setFilterRefresh(Date.now());
     }
 
-    const handleDeleteAlcoholicFilter = (filter) => {
+    const handleDeleteAlcoholicFilter = () => {
         const newFilters = {
             ...currentFilters,
             alcoholic: null
@@ -51,6 +58,7 @@ function Search() {
 
         setCurrentFilters(newFilters);
         setSessionFilters(newFilters);
+        setFilterRefresh(Date.now());
     }
 
     const searchForCocktails = async () => {
@@ -59,13 +67,74 @@ function Search() {
         const mixrResponse = await ourDrinksClient.findDrinkByName(searchContent);
         const combinedResponse = [...(mixrResponse || []), ...(externalResponse || [])];
         setIsSearching(false);
-        setSearchResults(combinedResponse);
+        const filteredResults = applyFilters(combinedResponse);
+        setSearchResults(filteredResults);
+    }
+
+    const applyFilters = (unfilteredResults) => {
+        if (!unfilteredResults) return unfilteredResults;
+
+        const results = unfilteredResults.filter((drink) => {
+            return drink && passesFilter(drink)
+        });
+
+        return results;
+    }
+
+    const passesFilter = (drink) => {
+        if (drink) {
+            if (!(drink.strAlcoholic === currentFilters.alcoholic || currentFilters.alcoholic === null)) {
+                return false;
+            }
+
+            if (!(currentFilters.ingredients && currentFilters.ingredients.length > 0)) {
+                return true;
+            }
+
+            if (drink.ingredients) {
+                let containsIngredientCount = 0;
+                // is Mixr drink, ingredients is array
+                drink.ingredients.forEach((strIngredient) => {
+                    const matchesIngredient = currentFilters.ingredients.some((filterIngredient) =>
+                        filterIngredient.toLowerCase() === strIngredient.toLowerCase()
+                    );
+                    if (matchesIngredient) containsIngredientCount++;
+                })
+
+                return containsIngredientCount == currentFilters.ingredients.length;
+            } else {
+                // is external API drink, ingredients stored in strIngredient1, strIngredient2, etc.
+                let containsIngredientCount = 0;
+
+                for (let i = 1; i < 15; i++) {
+                    const ingredientProperty = `strIngredient${i}`;
+                    const strIngredient = drink[`${ingredientProperty}`];
+
+                    if (strIngredient) {
+                        const ingredientMatches = currentFilters.ingredients.some((filterIngredient) =>
+                            filterIngredient.toLowerCase() === strIngredient.toLowerCase()
+                        );
+
+                        if (ingredientMatches) containsIngredientCount++;
+                    } else {
+                        break;
+                    }
+                }
+
+                return containsIngredientCount == currentFilters.ingredients.length;
+            }
+        }
+
+        return false;
     }
 
     useEffect(() => {
-        searchForCocktails();
-        fetchCurrentFilters();
-    }, [searchContent]);
+        updateFilters();
+    }, [searchContent, filterRefresh]);
+
+    useEffect(() => {
+        setSearchResults((prevSearchResults) => applyFilters(prevSearchResults));
+    }, [currentFilters, isSearching])
 
     return (
         <div style={{ marginLeft: "15px" }}>
@@ -76,7 +145,7 @@ function Search() {
                     <button className="golden-button-small dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Filter
                     </button>
-                    <FilterForm updateFilters={fetchCurrentFilters} startingFilters={currentFilters} />
+                    <FilterForm updateFilters={updateFilters} startingFilters={currentFilters} />
                 </div>
                 <div className="d-flex flex-row flex-wrap align-content-center">
                     {currentFilters.alcoholic !== null && <IngredientFilterTag ingredient={currentFilters.alcoholic} isInForm={false} deleteIngredient={handleDeleteAlcoholicFilter} />}
@@ -86,10 +155,10 @@ function Search() {
                 </div>
             </ResponsiveCenterDiv>
             <ResponsiveCenterDiv>
-                <div className="search-results-div">
+                <div className="search-results-div col-12">
                     {isSearching ?
                         <div className="d-flex justify-content-center w-100">
-                            <h1 style={{ color: "white" }}>Searching for Cocktails...</h1>
+                            <h1 className="mxr-med-gold">Searching for Cocktails...</h1>
                         </div>
                         :
                         searchResults && searchResults.length > 0 ?
@@ -98,14 +167,14 @@ function Search() {
                                 <div className="d-flex flex-wrap row">
                                     {searchResults && searchResults.map((d) =>
                                         <div className="col-md-6 col-xxl-4">
-                                            <DrinkCard drink={d} />
+                                            <DrinkCard drink={d} className="drinkCard-searchResults"/>
                                         </div>
                                     )}
                                 </div>
                             </div>
                             :
                             <div className="d-flex justify-content-center">
-                                <h1 style={{ color: "white" }}>
+                                <h1 className="mxr-med-gold">
                                     {searchContent?.length > 0 ?
                                         "No results :/" : ""}
                                 </h1>

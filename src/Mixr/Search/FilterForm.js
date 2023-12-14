@@ -16,10 +16,19 @@ function FilterForm({ updateFilters, startingFilters }) {
     const [currentIngredient, setCurrentIngredient] = useState(''); // for tracking value of ingredient text input
     const [alcoholicSelection, setAlcoholicSelection] = useState(null); // for tracking state of alcoholic radios
     const [ingredientAutofill, setIngredientAutofill] = useState([]); // for tracking autofill values
+    const [invalidIngredient, setInvalidIngredient] = useState(false); // for tracking if an invalid ingredient was inputted
 
     // updates state of alcoholic radios (if same radio is clicked, sets to null (neither selected), otherwise sets to the one that was selected)
     const handleAlcoholicChange = (selection) => {
-        setAlcoholicSelection((previousValue) => (previousValue === selection ? null : selection));
+        const newSelection = alcoholicSelection === selection ? null : selection;
+        setAlcoholicSelection(newSelection);
+
+        const newFilters = {
+            ...currentFilters,
+            alcoholic: newSelection
+        }
+
+        setCurrentFilters(newFilters);
     }
 
     // removes ingredient from local useState
@@ -33,15 +42,16 @@ function FilterForm({ updateFilters, startingFilters }) {
     }
 
     // 
-    const handleAddIngredientFilter = (event) => {
+    const handleAddIngredientFilter = async (event) => {
         if (currentIngredient === '') {
             console.log("No ingredient inputted");
             return;
         }
 
         // checks if valid ingredient
-        if (!ingredientExists(currentIngredient)) {
-            console.log("Ingredient does not exist"); // ingredients will be added to mongo in create cocktail. no creating ingredients for searchers
+        if (!(await ingredientExists(currentIngredient)) || ingredientFilterExists(currentIngredient)) {
+            setInvalidIngredient(true);
+            setCurrentIngredient('');
             return;
         }
 
@@ -61,29 +71,34 @@ function FilterForm({ updateFilters, startingFilters }) {
         setCurrentIngredient('');
     };
 
-    const ingredientExists = (ingredient) => {
-        console.log(`checking if ${ingredient} exists`);
-        // TODO: check if ingredient exists
+    const ingredientFilterExists = (ingredient) => {
+        console.log(`current ingredient: ${ingredient}`)
+        console.log(`existing ingredients: ${currentFilters.ingredients}`)
+        const ingredientExists = currentFilters.ingredients.some((i) => {
+            console.log(i);
+            return (i === ingredient)
+        });
 
+        return ingredientExists;
+    }
+
+    const ingredientExists = async (ingredient) => {
         // query mongoDB
+        console.log(`checking if ${ingredient} exists`)
+        const mixrIngredient = await ingredientClient.findMixrIngredientByName(ingredient);
         // query external API
-        return true;
+        const externalIngredient = await ingredientClient.findExternalIngredientByName(ingredient);
+
+        return mixrIngredient || externalIngredient;
     };
 
     // called when "Apply" button is clicked
     const handleUpdateFilters = async (event) => {
-        try {
-            // updates filters in session
-            await filterClient.setFilters({
-                alcoholic: alcoholicSelection,
-                ingredients: currentFilters.ingredients
-            });
-            // calls function passed in from parent
-            //  - function in parent element fetches updated filters from session and updates parent useState
-            updateFilters();
-        } catch (error) {
-            console.error(`Error setting session filters: ${error}`)
-        }
+        // updates filters in session
+        await filterClient.setFilters(currentFilters);
+        // calls function passed in from parent
+        //  - function in parent element fetches updated filters from session and updates parent useState
+        updateFilters();
     }
 
     // calls client to autofill based on text input
@@ -127,7 +142,7 @@ function FilterForm({ updateFilters, startingFilters }) {
                             id="alcoholic-check"
                             checked={alcoholicSelection === 'Alcoholic'} // checked when radio selection matches
                             onClick={() => handleAlcoholicChange('Alcoholic')} // includes onClick handler so user can deselect radio
-                        /> 
+                        />
                         <label className="form-check-label" htmlFor="alcoholic-check">
                             Alcoholic
                         </label>
@@ -154,6 +169,7 @@ function FilterForm({ updateFilters, startingFilters }) {
                         placeholder="Search for ingredients..."
                         id="ingredient-search-input"
                         onChange={(e) => {
+                            setInvalidIngredient(false);
                             setCurrentIngredient(e.target.value);
                             handleIngredientAutofill(e.target.value);
                         }}
@@ -165,11 +181,14 @@ function FilterForm({ updateFilters, startingFilters }) {
                     {<ul className="dropdown-menu">
                         {ingredientAutofill.map((ingredient) => {
                             return (
-                            <li>
-                                <a className="dropdown-item" onClick={(e) => setCurrentIngredient(ingredient)}>{ingredient}</a>
-                            </li>)
+                                <li>
+                                    <a className="dropdown-item" onClick={(e) => setCurrentIngredient(ingredient)}>{ingredient}</a>
+                                </li>)
                         })}
                     </ul>}
+                    {invalidIngredient && <div className="alert alert-danger" role="alert" style={{ padding: "5px 15px", marginTop: "15px" }}>
+                        Invalid ingredient
+                    </div>}
                 </div>
                 <div className="filter-tags-div">
                     {currentFilters && currentFilters.ingredients.map((i) => (

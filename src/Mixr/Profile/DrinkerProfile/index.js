@@ -2,18 +2,29 @@ import { FaS, FaStar, FaStarHalf } from "react-icons/fa6";
 import * as followsClient from "../../Clients/followsClient";
 import * as favoritesClient from "../../Clients/favoritesClient";
 import * as ourDrinksClient from "../../Clients/ourDrinksClient";
+import * as reviewsClient from "../../Clients/reviewsClient";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ReviewCard from "../../Review/card";
+import DrinkCard from "../../DrinkCard/DrinkCard";
 
 function DrinkerProfile({ profile }) {
     const [following, setFollowing] = useState([]);
     const [followers, setFollowers] = useState([]);
     const [favorites, setFavorites] = useState([]);
+    const [reviews, setReviews] = useState([]);
 
     // get the drink from the drink JSON file based on the drink id
     const getDrink = async (drinkID) => {
         const drink = await ourDrinksClient.findDrinkById(drinkID);
         console.log(drink);
-        return await drink;
+        return drink;
+    }
+
+    // the reviews that the user has made
+    const fetchReviews = async () => {
+        const reviews = await reviewsClient.findReviewsFromUser(profile);
+        setReviews(reviews);
     }
 
     // the user's fav drinks, obtained from their ids
@@ -57,83 +68,45 @@ function DrinkerProfile({ profile }) {
         fetchFollowers();
         fetchFollowing();
         fetchUserFavorites();
+        fetchReviews();
     }, [profile]);
 
     return (
         <div>
             <div className="flush-right">
-                <h3 className="mxr-med-gold">Your Favorite Recipes</h3>
+                <h3 className="mxr-med-gold">{profile.firstName}'s Favorite Recipes</h3>
                 <div className="d-inline-flex cardRow mt-4 w-100">
                     {favorites.map((drink) => (
-                        <div className="drinkCard mxr-med-blue-bg">
-                            <img className="drinkCard-img" src="./Images/EspressoMartini.jpg" />
-                            <div className="drinkCard-text">
-                                <h4>{drink.strDrink}</h4>
-                                <div className="d-inline">
-                                    {makeStars(4)}
-                                </div>
-                                <p>{drink.strInstructions.substring(0, 128) + "..."}</p>
-                            </div>
-                        </div>
+                        <DrinkCard drink={drink} />
                     ))}
-
                 </div>
 
                 <h3 className="mxr-med-gold mt-5">Followers</h3>
                 <div className="d-inline-flex cardRow mt-4 w-100">
                     {followers.map((follower) => (
-                        <div className="profile-card">
+                        <Link to={`/Profile/${follower._id}`} className="profile-card no-underline">
                             <img className="circle-img mb-4" src="./Images/thegoat.jpg" />
                             <h5 className="mxr-light-gold">{follower.firstName} {follower.lastName}</h5>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
                 <h3 className="mxr-med-gold mt-5">Following</h3>
                 <div className="d-inline-flex cardRow mt-4 w-100">
                     {following.map((follow) => (
-                        <div className="profile-card">
+                        <Link to={`/Profile/${follow._id}`} className="profile-card no-underline">
                             <img className="circle-img mb-4" src="./Images/thegoat.jpg" />
                             <h5 className="mxr-light-gold">{follow.firstName} {follow.lastName}</h5>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
 
             <h3 className="mxr-med-gold mt-5">Reviews</h3>
             <div className="mt-4 w-100">
-                <div className="review d-flex">
-                    <img className="review-img circle-img me-5" src="./Images/thegoat.jpg" />
-                    <div className="review-text">
-                        <h4>Espresso Martini</h4>
-                        <div className="d-inline">
-                            {makeStars(4)}
-                        </div>
-                        <p className="mt-3">Yummy.</p>
-                    </div>
-                </div>
-
-                <div className="review d-flex">
-                    <img className="review-img circle-img me-5" src="./Images/thegoat.jpg" />
-                    <div className="review-text">
-                        <h4>Espresso Martini</h4>
-                        <div className="d-inline">
-                            {makeStars(4)}
-                        </div>
-                        <p className="mt-3">Yummy.</p>
-                    </div>
-                </div>
-
-                <div className="review d-flex">
-                    <img className="review-img circle-img me-5" src="./Images/thegoat.jpg" />
-                    <div className="review-text">
-                        <h4>Espresso Martini</h4>
-                        <div className="d-inline">
-                            {makeStars(4)}
-                        </div>
-                        <p className="mt-3">Yummy.</p>
-                    </div>
-                </div>
+                {reviews.map((review) => (
+                    <ReviewCard review={review} />
+                ))}
             </div>
         </div>
     )
