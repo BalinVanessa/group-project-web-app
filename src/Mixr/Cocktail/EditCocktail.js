@@ -74,6 +74,7 @@ function EditCocktail() {
         console.log(updatedDrink);
         const drink = await ourDrinksClient.updateDrink(updatedDrink);
         console.log(drink);
+        fetchCurrentIngredients(drink);
     }
 
     //adds a new measurement to the current list of measurements for a drink
@@ -88,10 +89,13 @@ function EditCocktail() {
     const deleteIngredient = async (ingredient) => {
         const updatedDrink = {
             ...currentDrink,
-            ingredients: [...currentDrink?.ingredients.filter((item) => ((item.strIngredient !== ingredient)))]
-        }
+            ingredients: [...currentDrink.ingredients.filter((item) => item !== ingredient.idIngredient)]
+        };
+        console.log(ingredient);
+        console.log(updatedDrink);
         const drink = await ourDrinksClient.updateDrink(updatedDrink);
-    }
+        console.log(drink);
+    };
 
     //autofills the ingredient
     const handleIngredientAutofill = async (partialName) => {
