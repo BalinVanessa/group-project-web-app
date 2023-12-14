@@ -42,7 +42,7 @@ export const findExternalIngredientById = async (ingredientId) => {
 export const findExternalIngredientByName = async (ingredient) => {
     const response = await externalClient.get(`${EXTERNAL_BASE_API}search.php?i=${ingredient}`);
 
-    const ingredientResponse = response.data.ingredients[0];
+    const ingredientResponse = response.data.ingredients && response.data.ingredients[0];
     return ingredientResponse;
 }
 

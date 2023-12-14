@@ -16,6 +16,7 @@ function FilterForm({ updateFilters, startingFilters }) {
     const [currentIngredient, setCurrentIngredient] = useState(''); // for tracking value of ingredient text input
     const [alcoholicSelection, setAlcoholicSelection] = useState(null); // for tracking state of alcoholic radios
     const [ingredientAutofill, setIngredientAutofill] = useState([]); // for tracking autofill values
+    const [invalidIngredient, setInvalidIngredient] = useState(false); // for tracking if an invalid ingredient was inputted
 
     // updates state of alcoholic radios (if same radio is clicked, sets to null (neither selected), otherwise sets to the one that was selected)
     const handleAlcoholicChange = (selection) => {
@@ -41,15 +42,16 @@ function FilterForm({ updateFilters, startingFilters }) {
     }
 
     // 
-    const handleAddIngredientFilter = (event) => {
+    const handleAddIngredientFilter = async (event) => {
         if (currentIngredient === '') {
             console.log("No ingredient inputted");
             return;
         }
 
         // checks if valid ingredient
-        if (!ingredientExists(currentIngredient)) {
-            console.log("Ingredient does not exist"); // ingredients will be added to mongo in create cocktail. no creating ingredients for searchers
+        if (!(await ingredientExists(currentIngredient)) || ingredientFilterExists(currentIngredient)) {
+            setInvalidIngredient(true);
+            setCurrentIngredient('');
             return;
         }
 
@@ -69,13 +71,25 @@ function FilterForm({ updateFilters, startingFilters }) {
         setCurrentIngredient('');
     };
 
-    const ingredientExists = (ingredient) => {
-        console.log(`checking if ${ingredient} exists`);
-        // TODO: check if ingredient exists
+    const ingredientFilterExists = (ingredient) => {
+        console.log(`current ingredient: ${ingredient}`)
+        console.log(`existing ingredients: ${currentFilters.ingredients}`)
+        const ingredientExists = currentFilters.ingredients.some((i) => {
+            console.log(i);
+            return (i === ingredient)
+        });
 
+        return ingredientExists;
+    }
+
+    const ingredientExists = async (ingredient) => {
         // query mongoDB
+        console.log(`checking if ${ingredient} exists`)
+        const mixrIngredient = await ingredientClient.findMixrIngredientByName(ingredient);
         // query external API
-        return true;
+        const externalIngredient = await ingredientClient.findExternalIngredientByName(ingredient);
+
+        return mixrIngredient || externalIngredient;
     };
 
     // called when "Apply" button is clicked
@@ -155,6 +169,7 @@ function FilterForm({ updateFilters, startingFilters }) {
                         placeholder="Search for ingredients..."
                         id="ingredient-search-input"
                         onChange={(e) => {
+                            setInvalidIngredient(false);
                             setCurrentIngredient(e.target.value);
                             handleIngredientAutofill(e.target.value);
                         }}
@@ -171,6 +186,9 @@ function FilterForm({ updateFilters, startingFilters }) {
                                 </li>)
                         })}
                     </ul>}
+                    {invalidIngredient && <div className="alert alert-danger" role="alert" style={{ padding: "5px 15px", marginTop: "15px" }}>
+                        Invalid ingredient
+                    </div>}
                 </div>
                 <div className="filter-tags-div">
                     {currentFilters && currentFilters.ingredients.map((i) => (
