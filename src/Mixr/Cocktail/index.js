@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 
 import { Link, useLocation, useParams } from "react-router-dom";
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
-import * as userClient from "../Users/usersClient";
+import * as ingredientClient from "../Clients/ingredientsClient";
+import { ReviewCard } from "../Review/card";
 
 function Cocktail() {
     const { id } = useParams(); //grabs drinkID
     const [currentDrink, setCurrentDrink] = useState(null);
+    const [currentIngredients, setCurrentIngredients] = useState(null);
     //const [mixologistName, setMixologistName] = useState(null);
 
     /*
@@ -19,9 +21,35 @@ function Cocktail() {
     }
     */
 
+    //gets a drink by its ID
     const fetchDrink = async () => {
         const drink = await ourDrinksClient.findDrinkById(id);
         setCurrentDrink(drink);
+        fetchCurrentIngredients(drink);
+    };
+
+    //gets the name of an ingredient when passed its ID
+    const fetchIngredientName = async (id) => {
+        console.log(id);
+
+        const mixrIngredient = await ingredientClient.findMixrIngredientById(id);
+        if (!mixrIngredient) {
+            const externalIngredient = await ingredientClient.findExternalIngredientById(id);
+            console.log(externalIngredient)
+            return externalIngredient.strIngredient;
+        } else {
+            return mixrIngredient.strIngredient;
+        }
+    }
+
+    //gets a list of the names of the current ingredients in the drink
+    const fetchCurrentIngredients = async (drink) => {
+        if (drink && drink.ingredients) {
+            const ingredientPromises = drink.ingredients.map((ingredient) => fetchIngredientName(ingredient));
+            const currentIngredients = await Promise.all(ingredientPromises);
+            setCurrentIngredients(currentIngredients);
+            console.log(currentIngredients);
+        }
     };
 
     /*
@@ -35,7 +63,7 @@ function Cocktail() {
     useEffect(() => {
         fetchDrink();
         //fetchMixologistName();
-    }, [id]);
+    }, []);
 
     // generates the given amount of star icons
     function makeStars(num) {
@@ -79,9 +107,10 @@ function Cocktail() {
 
                     <h5 className="mxr-dark-gold">Ingredients:</h5>
                     <ul className="mxr-light-gold">
-                        {currentDrink?.measures.map((measurement, index) => (
-                            <li key={index}>{measurement} {currentDrink?.ingredients[index]}</li>
-                        ))}
+                        {currentDrink?.measures?.map((measurement, index) => (
+                            currentIngredients && 
+                            <li key={index}>{measurement} {currentIngredients[index]}</li>)
+                        )}
                     </ul>
                     <div className="spacer-s"></div>
                     <h5 className="mxr-dark-gold">Directions:</h5>
