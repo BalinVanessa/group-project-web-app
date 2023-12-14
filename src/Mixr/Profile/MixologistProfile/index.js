@@ -4,6 +4,8 @@ import * as favoritesClient from "../../Clients/favoritesClient";
 import * as ourDrinksClient from "../../Clients/ourDrinksClient";
 import * as reviewsClient from "../../Clients/reviewsClient";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import ReviewCard from "../../Review/card";
 import DrinkCard from "../../DrinkCard/DrinkCard";
@@ -14,6 +16,9 @@ function MixologistProfile({ profile }) {
     const [favorites, setFavorites] = useState([]);
     const [createdDrinks, setCreatedDrinks] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const { currentUser } = useSelector((state) => state.userReducer);
+    const { userID } = useParams();
+
 
     // get the drink from the drink JSON file based on the drink id
     const getDrink = async (drinkID) => {
@@ -77,10 +82,19 @@ function MixologistProfile({ profile }) {
         fetchUserFavorites();
         fetchCreatedDrinks();
         fetchReviews();
-    }, [profile]);
+    }, [userID, profile]);
 
     return (
         <div>
+            {currentUser && currentUser._id === userID && (
+                <div className="text-center">
+                    <Link to={`/AddCocktail`}>
+                        <button className="golden-button-large">Create New Cocktail</button>
+                    </Link>
+                    <div className="spacer-l"></div>
+                </div>
+            )}
+
             <div className="flush-right">
                 <h3 className="mxr-med-gold">{profile.firstName}'s Created Recipes</h3>
                 <div className="d-inline-flex cardRow mt-4 w-100">
