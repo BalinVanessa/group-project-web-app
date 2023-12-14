@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import * as filterClient from './../Clients/filtersClient'
 import * as externalDrinksClient from './../Clients/externalDrinksClient';
 import * as ourDrinksClient from './../Clients/ourDrinksClient';
-import DrinkCard from "./DrinkCard";
+import DrinkCard from "../DrinkCard/DrinkCard";
 
 function Search() {
 
@@ -167,7 +167,7 @@ function Search() {
                                 <div className="d-flex flex-wrap row">
                                     {searchResults && searchResults.map((d) =>
                                         <div className="col-md-6 col-xxl-4">
-                                            <DrinkCard drink={d} />
+                                            <DrinkCard drink={d} className="drinkCard-searchResults"/>
                                         </div>
                                     )}
                                 </div>
