@@ -35,3 +35,8 @@ export const updateDrink = async (drink) => {
     const response = await client.put(`${DRINKS_API}/${drink.idDrink}`, drink);
     return response.data;
 }
+
+export const findDrinksByMixologist = async (mixologist) => {
+    const response = await client.get(`${DRINKS_API}/mixologist/${mixologist._id}`);
+    return response.data;
+}
