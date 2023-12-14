@@ -34,7 +34,14 @@ function MakeReview() {
         navigate(`/Cocktail/${drink.idDrink}`);
     }
 
+    const enforceSignin = async () => {
+        if (!currentUser) {
+            navigate("/Login");
+        }
+    }
+
     useEffect(() => {
+        enforceSignin();
         fetchDrink();
     }, []);
 
