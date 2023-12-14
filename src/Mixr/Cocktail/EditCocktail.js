@@ -39,8 +39,13 @@ function EditCocktail() {
     };
 
     const updateDrink = async () => {
-        const newDrink = await ourDrinksClient.updateDrink(currentDrink);
+        const drink = await ourDrinksClient.updateDrink(currentDrink);
         navigate(`/Cocktail/${id}`);
+    }
+
+    const deleteDrink = async () => {
+        const drink = await ourDrinksClient.deleteDrink(currentDrink);
+        navigate('/Home')
     }
 
     const handleIngredientAutofill = async (partialName) => {
@@ -187,7 +192,7 @@ function EditCocktail() {
                     <Link to={`/Cocktail/${id}`}>
                         <button className="golden-button-med-outline me-2">Discard changes</button>
                     </Link>
-                    <button className="red-button-medium me-2">Delete recipe</button>
+                    <button onClick={deleteDrink} className="red-button-medium me-2">Delete recipe</button>
                     <button onClick={updateDrink} className="golden-button-small">Update</button>
                 </div>
             </div>
