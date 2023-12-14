@@ -10,6 +10,7 @@ import * as ingredientClient from "../Clients/ingredientsClient";
 import * as usersClient from "./../Users/usersClient";
 import * as reviewsClient from "./../Clients/reviewsClient.js";
 import * as favoritesClient from "./../Clients/favoritesClient.js";
+import * as externalDrinksClient from './../Clients/externalDrinksClient.js';
 import ReviewCard from "./../Review/card.js";
 import { useSelector } from "react-redux";
 
@@ -26,11 +27,19 @@ function Cocktail() {
     //gets a drink by its ID
     const fetchDrink = async () => {
         const drink = await ourDrinksClient.findDrinkById(id);
-        setCurrentDrink(drink);
-        fetchCurrentIngredients(drink);
-        fetchMixologist(drink.mixologist);
-        fetchDrinkReviews(drink);
-        fetchIsFavorited(drink);
+        if (!drink) {
+            const externalDrink = await externalDrinksClient.findExternalDrinksByID(id);
+            setCurrentDrink(externalDrink);
+            fetchCurrentExternalIngredients(externalDrink);
+            fetchDrinkReviews(externalDrink);
+            fetchIsFavorited(externalDrink);
+        } else {
+            setCurrentDrink(drink);
+            fetchCurrentIngredients(drink);
+            fetchMixologist(drink.mixologist);
+            fetchDrinkReviews(drink);
+            fetchIsFavorited(drink);
+        }
     };
 
     const fetchDrinkReviews = async (drink) => {
@@ -63,10 +72,48 @@ function Cocktail() {
         }
     };
 
+    const fetchCurrentExternalIngredients = async (externalDrink) => {
+        if (externalDrink) {
+            const ingredients = [];
+            for (let i = 1; i < 15; i++) {
+                const ingredientProperty = `strIngredient${i}`;
+                const strIngredient = externalDrink[`${ingredientProperty}`];
+
+                if (strIngredient) {
+                    ingredients.push(strIngredient);
+                }
+            }
+
+            setCurrentIngredients(ingredients);
+            fetchCurrentExternalMeasurements(externalDrink);
+        }
+    }
+
+    const fetchCurrentExternalMeasurements = async (externalDrink) => {
+        if (externalDrink && currentIngredients) {
+            const measures = [];
+            for (let i = 1; i <= currentIngredients.length; i++) {
+                const measureProperty = `strMeasure${i}`;
+                const strMeasure = externalDrink[`${measureProperty}`];
+
+                if (strMeasure) {
+                    measures.push(strMeasure);
+                }
+            }
+
+            setCurrentDrink({
+                ...externalDrink,
+                measures: measures
+            })
+        }
+    }
+
     const fetchMixologist = async (mixologistId) => {
         const mixologist = await usersClient.findUserById(mixologistId);
-        setMixologistName(mixologist.username);
-        setMixologist(mixologist);
+        if (mixologist) {
+            setMixologistName(mixologist.username);
+            setMixologist(mixologist);
+        }
     }
 
     const fetchIsFavorited = async (drink) => {
@@ -133,9 +180,9 @@ function Cocktail() {
                         {makeStars(4)}
                     </div>
                     <div className="spacer-s"></div>
-                    <h5 className="mxr-light-gold">Made by: <Link className="no-underline" to={`/Profile/${currentDrink?.mixologist}`}>
+                    <h5 className="mxr-light-gold">Made by: {currentDrink?.mixologist ? <Link className="no-underline" to={`/Profile/${currentDrink.mixologist}`}>
                         <span className="mxr-med-gold">{mixologistName}</span>
-                    </Link>
+                    </Link> : "Anonymous"}
                     </h5>
 
                     <div className="spacer-m"></div>
