@@ -105,7 +105,7 @@ function DrinkerProfile({ profile }) {
             <h3 className="mxr-med-gold mt-5">Reviews</h3>
             <div className="mt-4 w-100">
                 {reviews.map((review) => (
-                    <ReviewCard review={review} />
+                    <ReviewCard review={review} refreshFunc={fetchReviews} />
                 ))}
             </div>
         </div>
