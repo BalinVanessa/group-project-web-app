@@ -166,7 +166,18 @@ hr.smaller {
   font-size: 20px;
 }
 
-
+.golden-button-large {
+  height: 50px;
+  width: 240px;
+  background-color: #E2D36C;
+  color: #14232C;
+  border-radius: 15px;
+  border-width: 0px;
+  font-family: 'Limelight', sans-serif;
+  font-family: 'Sulphur Point', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
 
 .golden-button-large-outline {
   height: 45px;

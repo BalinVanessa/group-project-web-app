@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import CurrentUser from "./Users/currentUser";
 import EditReview from "./Review/editReview";
 import MakeReview from "./Review/makeReview";
+import AddCocktail from "./Cocktail/AddCocktail";
 
 function Mixr() {
     return (
@@ -35,6 +36,7 @@ function Mixr() {
                         <Route path="/EditCocktail/:id" element={<EditCocktail />} />
                         <Route path="/EditReview/:reviewID" element={<EditReview />} />
                         <Route path="/MakeReview/:drinkID" element={<MakeReview />} />
+                        <Route path="/AddCocktail" element={<AddCocktail/>}/>
                     </Routes>
                 </div>
             </CurrentUser>
