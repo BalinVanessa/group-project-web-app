@@ -82,7 +82,7 @@ function MixologistProfile({ profile }) {
             <div className="flush-right">
                 <h3 className="mxr-med-gold">Your Created Recipes</h3>
                 <div className="d-inline-flex cardRow mt-4 w-100">
-                    {createdDrinks.map((drink) => (
+                    {createdDrinks && createdDrinks.map((drink) => (
                         <div className="drinkCard mxr-med-blue-bg">
                             <img className="drinkCard-img" src="./Images/EspressoMartini.jpg" />
                             <div className="drinkCard-text">
