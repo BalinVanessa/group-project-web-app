@@ -12,7 +12,7 @@ import { setCurrentUser } from "../Users/reducer";
 
 function Profile() {
     const { currentUser } = useSelector((state) => state.userReducer);
-    const { userID } = useParams(false);
+    const { userID } = useParams();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

@@ -56,7 +56,7 @@ function ReviewCard({ review, refreshFunc }) {
                 </div>
                 {currentUser && currentUser._id === review.user ?
                     <div className="d-flex justify-content-end col-12 col-lg-2">
-                        <Link className="no-underline">
+                        <Link to={`/EditReview/${review._id}`} className="no-underline">
                             <FaPencil className="mxr-med-gold icon-size-lg m-2" />
                         </Link>
                         <FaTrashCan onClick={deleteReview} className="mxr-med-gold icon-size-lg m-2" />
