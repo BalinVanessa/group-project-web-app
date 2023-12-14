@@ -74,6 +74,7 @@ function EditCocktail() {
         console.log(updatedDrink);
         const drink = await ourDrinksClient.updateDrink(updatedDrink);
         console.log(drink);
+        fetchCurrentIngredients(drink);
     }
 
     //adds a new measurement to the current list of measurements for a drink
@@ -85,11 +86,25 @@ function EditCocktail() {
         const drink = await ourDrinksClient.updateDrink(updatedDrink);
     }
 
+    //deletes an ingredient from the current list of ingredients for a drink
     const deleteIngredient = async (ingredient) => {
         const updatedDrink = {
             ...currentDrink,
-            ingredients: [...currentDrink?.ingredients.filter((item) => ((item.strIngredient !== ingredient)))]
+            ingredients: [...currentDrink.ingredients.filter((item) => item !== ingredient.idIngredient)]
+        };
+        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+    };
+
+    //delete a new measurement from the current list of measurements for a drink
+    const deleteMeasurement = async (indexRemoved) => {
+        console.log(indexRemoved);
+        console.log(currentDrink.measures);
+    
+        const updatedDrink = {
+            ...currentDrink,
+            measures: [...currentDrink.measures.filter((item, index) => ((index) !== indexRemoved))]
         }
+        console.log(updatedDrink);
         const drink = await ourDrinksClient.updateDrink(updatedDrink);
     }
 
@@ -205,14 +220,17 @@ function EditCocktail() {
                     </div>
                     <div className="col-9">
                         <div className="d-flex flex-row">
-                            <input type="text" className="form-control w-100" id="measurement"/>
-                            <button className="golden-button-small ms-2"><FaPlus /></button>
+                            <input type="text" 
+                            className="form-control w-100" 
+                            id="measurement"
+                            onChange={(e) => setInputtedMeasure(e.target.value)}/>
+                            <button onClick={() => addMeasurement(inputtedMeasure)} className="golden-button-small ms-2"><FaPlus /></button>
                         </div>
                         <div>
-                            {currentDrink?.measures.map((measure) => (
+                            {currentDrink?.measures.map((measure, index) => (
                                 <div className="d-flex flex-row mt-2">
                                     <div className="mxr-med-gold w-100">{measure}</div>
-                                    <button className="red-button-small ms-2"><FaTrashCan /></button>
+                                    <button onClick={() => deleteMeasurement(index)} className="red-button-small ms-2"><FaTrashCan /></button>
                                 </div>
                             ))}
                         </div>
