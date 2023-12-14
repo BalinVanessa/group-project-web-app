@@ -18,7 +18,7 @@ function DrinkCard({ drink, className }) {
                 <img className="drinkCard-img" src={drink.strDrinkThumb || "./Images/thegoat.jpg"} />
             </div>
             <div className="drinkCard-text">
-                <Link to={`/Cocktail/${drink._id}`} className="no-underline mxr-med-gold">
+                <Link to={`/Cocktail/${drink.idDrink}`} className="no-underline mxr-med-gold">
                     <h4>{drink.strDrink}</h4>
                 </Link>
                 <div className="d-inline">

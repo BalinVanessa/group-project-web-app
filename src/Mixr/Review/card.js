@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
 import * as reviewsClient from "../Clients/reviewsClient";
+import * as usersClient from "./../Users/usersClient";
 import { Link, useNavigate } from "react-router-dom";
 import { FaPencil, FaS, FaStar, FaStarHalf, FaTrashCan } from "react-icons/fa6";
 import { useSelector } from "react-redux";
@@ -8,6 +9,7 @@ import { useSelector } from "react-redux";
 function ReviewCard({ review, refreshFunc }) {
     const { currentUser } = useSelector((state) => state.userReducer);
     const [drink, setDrink] = useState(null);
+    const [reviewUser, setReviewUser ] = useState(null);
 
     const navigate = useNavigate();
 
@@ -15,6 +17,13 @@ function ReviewCard({ review, refreshFunc }) {
         const drink = await ourDrinksClient.findDrinkById(review.idDrink);
         console.log(drink);
         setDrink(drink);
+    }
+
+    const fetchReviewUser = async(userId) => {
+        console.log(`fetching review user: ${userId}`);
+        const userResponse = await usersClient.findUserById(userId);
+
+        setReviewUser(userResponse);
     }
 
     const deleteReview = async () => {
@@ -39,6 +48,7 @@ function ReviewCard({ review, refreshFunc }) {
 
     useEffect(() => {
         fetchDrink();
+        fetchReviewUser(review.user);
     }, [review]);
 
     return (
@@ -49,6 +59,9 @@ function ReviewCard({ review, refreshFunc }) {
                     <Link to={`/Cocktail/${review.idDrink}`} className="no-underline">
                         <h4 className="mxr-med-gold">{drink && drink.strDrink}</h4>
                     </Link>
+                    {reviewUser && <Link className="no-underline" to={`/Profile/${reviewUser._id}`}>
+                        <h5 className="mxr-med-gold">{reviewUser?.username}</h5>
+                    </Link>}
                     <div className="d-inline">
                         {makeStars(review.numStars)}
                     </div>
