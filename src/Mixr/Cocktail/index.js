@@ -6,27 +6,31 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
 import * as ingredientClient from "../Clients/ingredientsClient";
-import { ReviewCard } from "../Review/card";
+import * as usersClient from "./../Users/usersClient";
+import * as reviewsClient from "./../Clients/reviewsClient.js";
+import ReviewCard from "./../Review/card.js";
 
 function Cocktail() {
     const { id } = useParams(); //grabs drinkID
     const [currentDrink, setCurrentDrink] = useState(null);
     const [currentIngredients, setCurrentIngredients] = useState(null);
-    //const [mixologistName, setMixologistName] = useState(null);
-
-    /*
-    const getUserWhoMadeDrink = async  (userID) => {
-        const user = await userClient.findUserById(userID);
-        return await user;
-    }
-    */
+    const [mixologistName, setMixologistName] = useState(null);
+    const [drinkReviews, setDrinkReviews] = useState(null);
 
     //gets a drink by its ID
     const fetchDrink = async () => {
         const drink = await ourDrinksClient.findDrinkById(id);
         setCurrentDrink(drink);
         fetchCurrentIngredients(drink);
+        fetchMixologistName(drink.mixologist);
+        fetchDrinkReviews(drink);
     };
+
+    const fetchDrinkReviews = async (drink) => {
+        const reviews = await reviewsClient.findReviewsForDrink(drink);
+
+        setDrinkReviews(reviews);
+    }
 
     //gets the name of an ingredient when passed its ID
     const fetchIngredientName = async (id) => {
@@ -52,17 +56,14 @@ function Cocktail() {
         }
     };
 
-    /*
-    const fetchMixologistName = async () => {
-        const mixologist = await getUserWhoMadeDrink(currentDrink?.mixologist).username;
-        setMixologistName(mixologist);
+    const fetchMixologistName = async (mixologistId) => {
+        const mixologist = await usersClient.findUserById(mixologistId);
+        setMixologistName(mixologist.username);
     }
-    */
 
 
     useEffect(() => {
         fetchDrink();
-        //fetchMixologistName();
     }, []);
 
     // generates the given amount of star icons
@@ -95,7 +96,10 @@ function Cocktail() {
                         {makeStars(4)}
                     </div>
                     <div className="spacer-s"></div>
-                    <p className="mxr-light-gold">Made by: {currentDrink?.mixologist}</p>
+                    <h5 className="mxr-light-gold">Made by: <Link className="no-underline" to={`/Profile/${currentDrink?.mixologist}`}>
+                        <span className="mxr-med-gold">{mixologistName}</span>
+                    </Link>
+                    </h5>
 
                     <div className="spacer-m"></div>
 
@@ -108,7 +112,7 @@ function Cocktail() {
                     <h5 className="mxr-dark-gold">Ingredients:</h5>
                     <ul className="mxr-light-gold">
                         {currentDrink?.measures?.map((measurement, index) => (
-                            currentIngredients && 
+                            currentIngredients &&
                             <li key={index}>{measurement} {currentIngredients[index]}</li>)
                         )}
                     </ul>
@@ -120,47 +124,21 @@ function Cocktail() {
                 </div>
             </div>
 
+            <hr className="smaller" />
+            <hr />
+            <hr className="smaller" />
+
             <div className="spacer-m"></div>
             <div className="pt-3 text-center">
                 <Link to={`/Review`}>
                     <button className="golden-button-medium">Add a review</button>
                 </Link>
             </div>
-
             <h3 className="mxr-med-gold mt-5">Reviews</h3>
             <div className="mt-4 w-100">
-                <div className="review d-flex">
-                    <img className="review-img circle-img me-5" src="./Images/thegoat.jpg" />
-                    <div className="review-text">
-                        <h4>Espresso Martini</h4>
-                        <div className="d-inline">
-                            {makeStars(4)}
-                        </div>
-                        <p className="mt-3">Yummy.</p>
-                    </div>
-                </div>
-
-                <div className="review d-flex">
-                    <img className="review-img circle-img me-5" src="./Images/thegoat.jpg" />
-                    <div className="review-text">
-                        <h4>Espresso Martini</h4>
-                        <div className="d-inline">
-                            {makeStars(4)}
-                        </div>
-                        <p className="mt-3">Yummy.</p>
-                    </div>
-                </div>
-
-                <div className="review d-flex">
-                    <img className="review-img circle-img me-5" src="./Images/thegoat.jpg" />
-                    <div className="review-text">
-                        <h4>Espresso Martini</h4>
-                        <div className="d-inline">
-                            {makeStars(4)}
-                        </div>
-                        <p className="mt-3">Yummy.</p>
-                    </div>
-                </div>
+                {drinkReviews?.map((review) => (
+                    <ReviewCard review={review}/>
+                ))}
             </div>
         </div>
     );
