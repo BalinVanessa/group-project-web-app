@@ -300,7 +300,8 @@ hr.smaller {
 }
 
 .review-img {
-  width: 128px;
+  width: 60px;
+  border-radius:50%;
 }
 
 /* COCKTAIL PAGE STYLING */

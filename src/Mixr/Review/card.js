@@ -1,15 +1,29 @@
 import { useEffect, useState } from "react";
 import * as ourDrinksClient from "../Clients/ourDrinksClient";
+import * as reviewsClient from "../Clients/reviewsClient";
 import { Link, useNavigate } from "react-router-dom";
-import { FaS, FaStar, FaStarHalf } from "react-icons/fa6";
+import { FaPencil, FaS, FaStar, FaStarHalf, FaTrashCan } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
-function ReviewCard({ review }) {
+function ReviewCard({ review, refreshFunc }) {
+    const { currentUser } = useSelector((state) => state.userReducer);
     const [drink, setDrink] = useState(null);
+
+    const navigate = useNavigate();
 
     const fetchDrink = async () => {
         const drink = await ourDrinksClient.findDrinkById(review.idDrink);
         console.log(drink);
         setDrink(drink);
+    }
+
+    const deleteReview = async () => {
+        const status = await reviewsClient.deleteReview(review);
+        console.log("Review deleted!");
+        // refreshFunc is what is called to update the reviews on the page
+        // ex: updating the list of reviews on Profile or cocktail page
+        // this should be the function that fetches reviews for that page.
+        refreshFunc();
     }
 
     // generates the given amount of star icons
@@ -28,16 +42,26 @@ function ReviewCard({ review }) {
     }, [review]);
 
     return (
-        <div className="review d-flex">
-            <img className="review-img circle-img me-5" src="./Images/thegoat.jpg" />
-            <div className="review-text">
-                <Link to={`/Cocktail/${review.idDrink}`} className="no-underline">
-                    <h4 className="mxr-med-gold">{drink && drink.strDrink}</h4>
-                </Link>
-                <div className="d-inline">
-                    {makeStars(review.numStars)}
+        <div className="review">
+            <div className="row justify-content-center w-100">
+                <img className="review-img col-8 col-sm-6 col-md-3 col-lg-2 mb-5 mb-lg-0" src="./Images/thegoat.jpg" />
+                <div className="review-text col-12 col-lg-8">
+                    <Link to={`/Cocktail/${review.idDrink}`} className="no-underline">
+                        <h4 className="mxr-med-gold">{drink && drink.strDrink}</h4>
+                    </Link>
+                    <div className="d-inline">
+                        {makeStars(review.numStars)}
+                    </div>
+                    <p className="mt-3">{review.reviewText}</p>
                 </div>
-                <p className="mt-3">{review.reviewText}</p>
+                {currentUser && currentUser._id === review.user ?
+                    <div className="d-flex justify-content-end col-12 col-lg-2">
+                        <Link className="no-underline">
+                            <FaPencil className="mxr-med-gold icon-size-lg m-2" />
+                        </Link>
+                        <FaTrashCan onClick={deleteReview} className="mxr-med-gold icon-size-lg m-2" />
+                    </div>:
+                    <div className="col-12 col-lg-2"> </div>}
             </div>
         </div>
     )
