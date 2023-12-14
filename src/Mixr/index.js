@@ -12,6 +12,7 @@ import store from "./store";
 import { Provider } from "react-redux";
 import CurrentUser from "./Users/currentUser";
 import EditReview from "./Review/editReview";
+import MakeReview from "./Review/makeReview";
 
 function Mixr() {
     return (
@@ -33,6 +34,7 @@ function Mixr() {
                         <Route path="/Cocktail/:id" element={<Cocktail />} />
                         <Route path="/EditCocktail/:id" element={<EditCocktail />} />
                         <Route path="/EditReview/:reviewID" element={<EditReview />} />
+                        <Route path="/MakeReview/:drinkID" element={<MakeReview />} />
                     </Routes>
                 </div>
             </CurrentUser>
