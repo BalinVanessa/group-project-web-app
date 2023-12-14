@@ -20,6 +20,7 @@ function ReviewCard({ review, refreshFunc }) {
     }
 
     const fetchReviewUser = async(userId) => {
+        console.log(`fetching review user: ${userId}`);
         const userResponse = await usersClient.findUserById(userId);
 
         setReviewUser(userResponse);
