@@ -36,12 +36,7 @@ function EditCocktail() {
             const currentIngredients = await Promise.all(ingredientPromises);
             setCurrentIngredients(currentIngredients);
         }
-    }
-
-    const addNewIngredient = ((newIngredient) => ({
-        ...currentDrink,
-        ingredients: [...currentDrink.ingredients, newIngredient],
-    }));
+    };
 
     const updateDrink = async () => {
         const newDrink = await ourDrinksClient.updateDrink(currentDrink);
@@ -138,12 +133,12 @@ function EditCocktail() {
                                     )}
                                 </ul>}
                             </div>
-                            <button className="golden-button-small ms-2"><FaPlus /></button>
+                            <button onClick={""} className="golden-button-small ms-2"><FaPlus /></button>
                         </div>
                         <div>
                             {currentIngredients?.map((ingredient) => (
-                                <div className="d-flex flex-row mt-2">
-                                    <div className="mxr-med-gold w-100">{ingredient.strIngredient}</div>
+                                <div key={ingredient?.idDrink} className="d-flex flex-row mt-2">
+                                    <div className="mxr-med-gold w-100">{ingredient?.strIngredient}</div>
                                     <button className="red-button-small ms-2"><FaTrashCan /></button>
                                 </div>
                             ))}
@@ -193,7 +188,7 @@ function EditCocktail() {
                         <button className="golden-button-med-outline me-2">Discard changes</button>
                     </Link>
                     <button className="red-button-medium me-2">Delete recipe</button>
-                    <button className="golden-button-small">Update</button>
+                    <button onClick={updateDrink} className="golden-button-small">Update</button>
                 </div>
             </div>
         </div>
