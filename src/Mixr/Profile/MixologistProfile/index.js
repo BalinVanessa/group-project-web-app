@@ -88,7 +88,7 @@ function MixologistProfile({ profile }) {
         <div>
             {currentUser && currentUser._id === userID && (
                 <div className="text-center">
-                    <Link to={`/AddCocktail`}>
+                    <Link to={`/AddCocktail/${currentUser._id}`}>
                         <button className="golden-button-large">Create New Cocktail</button>
                     </Link>
                     <div className="spacer-l"></div>

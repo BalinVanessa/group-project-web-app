@@ -67,45 +67,34 @@ function EditCocktail() {
     const addIngredient = async (newIngredientName) => {
         const newIngredient = await (ingredientClient.findExternalIngredientByName(newIngredientName) || ingredientClient.findMixrIngredientByName(newIngredientName));
         console.log(newIngredient);
-        const updatedDrink = {
+        setCurrentDrink({
             ...currentDrink,
             ingredients: [...currentDrink?.ingredients, newIngredient.idIngredient]
-        };
-        console.log(updatedDrink);
-        const drink = await ourDrinksClient.updateDrink(updatedDrink);
-        console.log(drink);
-        fetchCurrentIngredients(drink);
+        });
     }
 
     //adds a new measurement to the current list of measurements for a drink
     const addMeasurement = async (newMeasurement) => {
-        const updatedDrink = {
+        setCurrentDrink({
             ...currentDrink,
             measures: [...currentDrink?.measures, newMeasurement]
-        };
-        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+        });
     }
 
     //deletes an ingredient from the current list of ingredients for a drink
     const deleteIngredient = async (ingredient) => {
-        const updatedDrink = {
+        setCurrentDrink({
             ...currentDrink,
             ingredients: [...currentDrink.ingredients.filter((item) => item !== ingredient.idIngredient)]
-        };
-        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+        });
     };
 
     //delete a new measurement from the current list of measurements for a drink
     const deleteMeasurement = async (indexRemoved) => {
-        console.log(indexRemoved);
-        console.log(currentDrink.measures);
-    
-        const updatedDrink = {
+        setCurrentDrink({
             ...currentDrink,
             measures: [...currentDrink.measures.filter((item, index) => ((index) !== indexRemoved))]
-        }
-        console.log(updatedDrink);
-        const drink = await ourDrinksClient.updateDrink(updatedDrink);
+        });
     }
 
     //autofills the ingredient
@@ -158,11 +147,11 @@ function EditCocktail() {
                         <h4 className="mxr-med-gold labels">Drink Type</h4>
                     </div>
                     <div className="col-9">
-                        <input type="radio" id="alcoholic" name="drinkType"
+                        <input type="radio" id="alcoholic" name="drinkType" value="Alcoholic"
                             onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })} />
                         <label className="mxr-light-gold ms-2" for="alcoholic">Alcoholic</label>
                         <div className="spacer-xs"></div>
-                        <input type="radio" id="non-alcoholic" name="drinkType"
+                        <input type="radio" id="non-alcoholic" name="drinkType" value="Non alcoholic"
                             onChange={(e) => setCurrentDrink({ ...currentDrink, strAlcoholic: e.target.value })} />
                         <label className="mxr-light-gold ms-2" for="non-alcoholic">Non-Alcoholic</label>
                     </div>

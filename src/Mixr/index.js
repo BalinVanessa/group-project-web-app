@@ -36,7 +36,7 @@ function Mixr() {
                         <Route path="/EditCocktail/:id" element={<EditCocktail />} />
                         <Route path="/EditReview/:reviewID" element={<EditReview />} />
                         <Route path="/MakeReview/:drinkID" element={<MakeReview />} />
-                        <Route path="/AddCocktail" element={<AddCocktail/>}/>
+                        <Route path="/AddCocktail/:userID" element={<AddCocktail/>}/>
                     </Routes>
                 </div>
             </CurrentUser>
